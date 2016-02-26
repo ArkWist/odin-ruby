@@ -21,7 +21,7 @@ def shift_if_range(letter, shift_factor, range_start, range_end)
     letter_number += shift_factor
 
     if letter_number > range_end then
-      shift_factor = range_end - letter_number
+      shift_factor = letter_number - range_end
       letter_number = range_start + shift_factor
     end
 
