@@ -8,16 +8,16 @@ def substrings (sentence, dictionary)
   all_substrings
 end
 
-puts "Enter word/sentence: "
+print "Enter word/sentence: "
 user_sentence = gets.chomp.scan(/[\w']+/)
 
-puts "Enter dictionary words (separated with commas): "
+print "Enter dictionary words (separated with commas): "
 user_dictionary = gets.chomp.split(",")
 
 all_substrings = substrings(user_sentence, user_dictionary)
-puts "Substrings: { "
+print "Substrings: { "
 all_substrings.each do |key, value|
-  puts "#{key}=>#{value} "
+  print "#{key}=>#{value} "
 end
 puts "}"
 
