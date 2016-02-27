@@ -9,17 +9,21 @@ def substrings (sentence, dictionary)
 end
 
 print "Enter word/sentence: "
-user_sentence = gets.chomp.scan(/[\w']+/)
+user_sentence = gets.chomp.downcase.scan(/[\w']+/)
 
 print "Enter dictionary words (separated with commas): "
-user_dictionary = gets.chomp.split(",")
+user_dictionary = gets.chomp.delete(" ").split(",")
 
 all_substrings = substrings(user_sentence, user_dictionary)
-print "Substrings: { "
+print_string = "Substrings: {"
+needs_comma = false
 all_substrings.each do |key, value|
-  print "#{key}=>#{value} "
+  if needs_comma
+    print_string += ", "
+  end
+  needs_comma = true
+  print_string += "\"#{key}\"=>#{value}"
 end
-puts "}"
+print_string += "}"
+puts print_string
 
-
-# Learned scan
