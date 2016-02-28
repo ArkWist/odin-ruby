@@ -17,7 +17,9 @@ def bubble_sort (unsorted_array)
   end
 end
 
-print "Enter array to sort: "
-unsorted_array = gets.chomp
+# print "Enter array to sort: "
+# unsorted_array = gets.chomp
 
+unsorted_array = [1,3,2,5,6,4]
+puts unsorted_array
 puts bubble_sort(unsorted_array)
