@@ -23,11 +23,50 @@ module Enumerable
 =end
 
   def my_select
+    selected = []
+    for element in self
+      if yield(element)
+        selected << element
+      end
+    end
+    selected
+  end
 
-  #my_select
-  #my_all?      ; does everything satisfy the block condition?
-  #my_any?      ; does anything satisfy the block condition?
-  #my_none?
+  def my_all? # return false unless all true
+    for element in self
+      if !yield(element)
+        return false
+      end
+    end
+    true
+  end
+  
+  def my_any? # return true if at least 1 true
+    for element in self
+      if yield(element)
+        return true
+      end
+    end
+    false
+  end
+  
+  def my_none? # return false unless all false
+    for element in self
+      if yield(element)
+        return false
+      end
+    end
+    true
+  end
+
+  def my_count
+    count = 0
+    for element in self
+      count += 1
+    end
+    count
+  end
+  
   #my_count
   #my_map
   #my_inject
