@@ -6,7 +6,7 @@ module Enumerable
     end
   end
   
-  def my_each_with_index
+  def my_each_with_index  # Can I make this piggyback off my_each?
     index = 0
     for element in self
       yield(element,index)
@@ -14,65 +14,56 @@ module Enumerable
     end
   end
   
-=begin # Alternative from Jberczel for reference if mine doesn't work
-  def my_each_with_index
-    for i in 0...length
-      yield(self[i], i)
-    end
-  end
-=end
-
   def my_select
     selected = []
-    for element in self
-      if yield(element)
-        selected << element
-      end
-    end
+    my_each { |element| selected << element if yield(element) }
     selected
   end
-
-  def my_all? # return false unless all true
-    for element in self
-      if !yield(element)
-        return false
-      end
-    end
+  
+  def my_all?
+    my_each { |element| return false unless yield(element) }
     true
   end
   
-  def my_any? # return true if at least 1 true
-    for element in self
-      if yield(element)
-        return true
-      end
-    end
+  def my_any?
+    my_each { |element| return true if yield(element) }
     false
   end
   
-  def my_none? # return false unless all false
-    for element in self
-      if yield(element)
-        return false
-      end
-    end
+  def my_none?
+    my_each { |element| return false unless !yield(element) }
     true
   end
-
+  
   def my_count
     count = 0
-    for element in self
-      count += 1
-    end
+    my_each_with_index { |element| count += 1 if yield(element) }
     count
   end
-  
-  #my_count
-  #my_map
-  #my_inject
+
+  def my_map
+    mapped = []
+    each { |element| mapped << yield(element) }
+    mapped
+  end
+
+  def my_inject (injected)
+                # ; accumulates everything with what it's given
+                # ; but this doesn't match what ToP is asking
+                # ; so I think this takes a default value
+                # ; then that can be used in the block passed to inject
+                # ; which could be any operation
+    my_each { |element| injected = yield(injected, element) }
+    injected
+  end
   
 end
 
-  #multiply_els
+def multiply_els (array)
+  array.my_inject(1) { |result, element| result * element}
+end
 
-  
+
+array = [1, 3, 2, 6, 2, 5, 4, 5]
+print multiply_els(array)
+
