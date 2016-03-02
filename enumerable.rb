@@ -41,10 +41,33 @@ module Enumerable
     count
   end
 
+# Original my_map method
+=begin
   def my_map
     mapped = []
-    each { |element| mapped << yield(element) }
+    my_each { |element| mapped << yield(element) }
     mapped
+  end
+=end
+
+# New my_map method with proc
+### NEEDS TESTING AS I'M NOT QUITE FAMILIAR WITH PROCS
+=begin
+  def my_map (procedure)
+                # ; this receives a proc as an argument
+                # ; this proc is used to assign values to each element
+    mapped = []
+    my_each { |element| mapped << procedure.call }
+    mapped
+  end
+=end
+
+# New my_map taking proc, block, or both
+# Execute both if both present
+# Otherwise only execute proc
+### I CAN'T YET FIGURE OUT HOW TO DO THIS AND SO MUCH REVISIT THE PROJECT
+  def my_map (code)
+    # ??
   end
 
   def my_inject (injected)
@@ -64,6 +87,10 @@ def multiply_els (array)
 end
 
 
-array = [1, 3, 2, 6, 2, 5, 4, 5]
-print multiply_els(array)
+@array = [1, 3, 2, 6, 2, 5, 4, 5]
+
+# Test my_each ; can't test because repl.it doesn't like modules
+# @array.my_each { |element| print element}
+
+# print multiply_els(array)
 
