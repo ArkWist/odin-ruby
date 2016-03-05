@@ -28,9 +28,14 @@ end
 
 
 loop do
-  puts "Play?: "
+  #puts "Play?: "
   game = TicTacToe.new
-  
+  #puts "Default board?: "
+  #puts "Rows?: "
+  #rows = gets.chomp
+  #puts "Columns?: "
+  #columns = gets.chomp
+  game.set_board_size(3, 3)
   puts "Player 1 is human?: "
   
   puts "Player 2 is human?: "
