@@ -4,12 +4,13 @@ class TicTacToe
   def initialize
     @board = set_board
     @players = [Player.new('X'), Player.new('O')]
-    set_up_game
+    self.set_up_game
   end
   
   private
   
   def set_up_game
+    #self.ask_board_size
     #loop
     #print "Default board? (y/n): "
     #answer = gets.chomp.downcase
@@ -23,7 +24,7 @@ class TicTacToe
     #columns = gets.chomp
     #puts "Player 1 is human?: "
     #puts "Player 2 is human?: "
-    play
+    self.play
   
   def play
     #set_board
@@ -41,8 +42,17 @@ class TicTacToe
       game_over = @board.game_over?
       unless game_over { current_player = next_player(current_player) }
     end
-    @board.end_game
-  end  
+    self.end_game
+  end
+  
+  def next_player(current_player)
+    if current_player == @players.length - 1
+      current_player = 0
+    else
+      current_player += 1
+    end
+    current_player
+  end
   
   #private
   
@@ -68,7 +78,7 @@ class TicTacToe
     end
 
   class Player
-    def initialize(icon = '#', human = true)
+    def initialize(icon = '?', human = true)
       @icon = icon
       @human = human
     end
@@ -84,8 +94,13 @@ class TicTacToe
     def toggle_human_computer
       @human = !@human
     end
-      
-  
+    
+    def make_move
+      print "Choose your position: "
+      answer = gets.chomp.downcase
+      if answer.is_empty?
+      end
+    end
   end
 
 #loop do
