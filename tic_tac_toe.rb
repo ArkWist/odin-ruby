@@ -1,30 +1,65 @@
 # Tic-Tac-Toe
 
 class TicTacToe
+  require "tic_tac_toe_board.rb"
+  require "player.rb"
+
   def initialize
-    @board = set_board
+    @board = TicTacToeBoard.new
     @players = [Player.new('X'), Player.new('O')]
-    self.set_up_game
+    set_up_game
+    play
   end
   
   private
   
   def set_up_game
-    #self.ask_board_size
-    #loop
-    #print "Default board? (y/n): "
-    #answer = gets.chomp.downcase
-    #answer_valid = valid_yes_no?(answer)
-    #if answer.downcase = "n"
-    #  @board = reset_board
-    #elsif
-    #puts "Rows?: "
-    #rows = gets.chomp
-    #puts "Columns?: "
-    #columns = gets.chomp
-    #puts "Player 1 is human?: "
-    #puts "Player 2 is human?: "
-    self.play
+    dimension = ask_dimension
+    @board.set_board
+  end
+  
+  def ask_dimension
+    DIMENSION = 3
+    response = choose_from_options('Use default (#{DIMENSION}x#{DIMENSION}) board?', 'y', 'n')
+    unless response == 'y'
+      dimension = choose_from_range('How large a board?', '3', '9')
+    else
+      dimension = DIMENSION
+    end
+    dimension
+  end
+  
+  
+  
+  def choose_from_options(question, *option)
+    question += ' (' + option.join('/') + '): '
+    response = nil
+    until response
+      print question
+      user_input = gets.chomp.downcase
+      if user_input.include?(option)
+        response = user_input
+      else
+        continue
+      end
+    end
+    response
+  end
+  
+  def choose_from_range(question, min, max)
+    question += ' (#{min} - #{max}): '
+    response = nil
+    until response
+      print question
+      user_input = gets.chomp
+      if user_input >= min && user_input <= max
+        response = user_input
+      else
+        continue
+      end
+    end
+    response
+  end
   
   def play
     #set_board
@@ -42,7 +77,7 @@ class TicTacToe
       game_over = @board.game_over?
       unless game_over { current_player = next_player(current_player) }
     end
-    self.end_game
+    end_game
   end
   
   def next_player(current_player)
@@ -65,43 +100,7 @@ class TicTacToe
 # Perhaps as object in the board_
 # Or perhaps outside the board, in a game class?
 
-  class TicTacToeBoard
-    def initialize(row_count = 3, column_count = 3)
-      @cells = Array.new(row_count) { Array.new(column_count) { Cell.new(:empty)} }
-    end
 
-    class Cell
-      attr_reader :value
-      def initialize(value = :empty)
-        @value = value
-      end
-    end
-
-  class Player
-    def initialize(icon = '?', human = true)
-      @icon = icon
-      @human = human
-    end
-    def is_human?
-      @human
-    end
-    def is_computer?
-      !@human
-    end
-    def set_icon(icon)
-      @icon = icon
-    end
-    def toggle_human_computer
-      @human = !@human
-    end
-    
-    def make_move
-      print "Choose your position: "
-      answer = gets.chomp.downcase
-      if answer.is_empty?
-      end
-    end
-  end
 
 #loop do
   #puts "Play?: "
