@@ -2,12 +2,16 @@
 # Shares namespace with class:TicTacToe.
 
 class Player
-  def initialize(icon = '?', human = true)
+  def initialize(icon = '?', controller = :unknown)
     @icon = icon
-    @human = human
+    @controller = controller
   end
   def is_human?
-    @human
+    if @controller == :human
+      return true
+    else
+      return false
+    end
   end
   def is_computer?
     !@human
@@ -15,6 +19,23 @@ class Player
   def set_icon(icon)
     @icon = icon
   end
+  
+   
+  def set_controller(controller)
+    case controller
+    when :human
+      @human = true
+    when :computer
+      @human = false
+    else
+      puts "Invalid controller set to human."
+      @human = true
+    end
+  end
+  
+  def get_controller
+    
+    
   def toggle_human_computer
     @human = !@human
   end

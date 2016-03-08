@@ -1,12 +1,14 @@
 # Tic-Tac-Toe
 
 class TicTacToe
-  require "tic_tac_toe_board.rb"
-  require "player.rb"
+  require "ttt_board.rb"
+  require "ttt_player.rb"
+  DEFAULT_DIMENSION = 3
 
   def initialize
     @board = TicTacToeBoard.new
-    @players = [Player.new('X'), Player.new('O')]
+    @player = [Player.new('X'), Player.new('O')]
+    @player.each_with_index { |person, index| person.set_player_number(index + 1) }
     set_up_game
     play
   end
@@ -14,23 +16,33 @@ class TicTacToe
   private
   
   def set_up_game
-    dimension = ask_dimension
+    @board.set_dimension = ask_dimension
+    @player.each_with_index { |person, index| person.set_controller(ask_controller(index + 1)) }
     @board.set_board
   end
   
   def ask_dimension
-    DIMENSION = 3
     response = choose_from_options('Use default (#{DIMENSION}x#{DIMENSION}) board?', 'y', 'n')
-    unless response == 'y'
+    case response
+    when 'y'
+      dimension = DEFAULT_DIMENSION
+    when 'n'
       dimension = choose_from_range('How large a board?', '3', '9')
-    else
-      dimension = DIMENSION
     end
     dimension
   end
   
-  
-  
+  def ask_controller(player_number)
+    response = choose_from_options('Is #{player_number} human?', 'y', 'n')
+    case response
+    when 'y'
+      controller = :human
+    when 'n'
+      controller = :computer
+    end
+    controller
+  end
+      
   def choose_from_options(question, *option)
     question += ' (' + option.join('/') + '): '
     response = nil
@@ -62,8 +74,6 @@ class TicTacToe
   end
   
   def play
-    #set_board
-    #@board = TicTacToeBoard.new(@row_count, @column_count)
     @board.draw_board
     
     #take turn, then check, then set next turn
