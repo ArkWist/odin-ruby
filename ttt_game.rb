@@ -1,0 +1,94 @@
+require "ttt_board.rb"
+require "ttt_player.rb"
+require "ttt_helper.rb"
+
+class TTTGame
+  include Defaults
+  include Selections
+
+  def initialize
+    @board = TTTBoard.new
+    @players = [Player.new('X'), Player.new('O')]
+    set_up_game
+    play
+  end
+  
+  private
+  
+  def set_up_game
+    @board = TTTBoard.new(ask_dimension)
+    @players = @players.each_with_index do |person, index|
+      person.set_player_number(index + 1)
+      person.set_controller(ask_controller(person.player_number))
+    end
+    @board.set_board
+  end
+  
+  def ask_dimension
+    response = Selections.choose_from_options('Use default (#{Defaults::DIMENSION}x#{Defaults::DIMENSION}) board?', 'y', 'n')
+    case response
+    when 'y'
+      dimension = Defaults::DIMENSION
+    when 'n'
+      dimension = Selections.choose_from_range('How large a board?', '3', '9')
+    end
+    dimension
+  end
+  
+  def ask_controller(player_number)
+    response = Selections.choose_from_options('Is #{player_number} human?', 'y', 'n')
+    case response
+    when 'y'
+      human_controller = true
+    when 'n'
+      human_controller = false
+    end
+    human_controller
+  end
+  
+  def play    
+    #take turn, then check, then set next turn
+    game_over = false
+    current_player = 0
+    @board.draw_board
+    
+    while !game_over
+      move = @players[current_player].make_move
+      if !@board.cell_is_empty?(move)
+        next
+      else
+        @board.set_move(@players[current_player].player_icon, move)
+        @board.draw_board
+        if @board.victorious?(@players[current_player])
+          game_over = true
+        end
+        unless game_over { current_player = next_player(current_player) }
+      end
+    end
+    end_game(current_player)
+  end
+  
+  def next_player(current_player)
+    if current_player == @players.length - 1
+      current_player = 0
+    else
+      current_player += 1
+    end
+    current_player
+  end
+  
+  def end_game(winner)
+    puts "Player #{winner.player_number} is victorious."
+  end
+end
+
+  def ask_dimension
+    response = Selections.choose_from_options('Use default (#{Defaults::DIMENSION}x#{Defaults::DIMENSION}) board?', 'y', 'n')
+    case response
+    when 'y'
+      dimension = Defaults::DIMENSION
+    when 'n'
+      dimension = Selections.choose_from_range('How large a board?', '3', '9')
+    end
+    dimension
+  end
