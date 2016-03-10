@@ -38,8 +38,9 @@ module Selections
   end
   
   def choose_row_index
+  end
   
   def choose_column_index
-
+  end
 
 end
