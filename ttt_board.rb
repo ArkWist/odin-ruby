@@ -40,7 +40,7 @@ class TTTBoard
     @cells[row][column].set_value(icon)
   end
   
-  def victorious?(player, move)
+  def is_victorious?(player, move)
     icon = player.player_icon
     row = move[0]
     column = move[1]
@@ -93,10 +93,12 @@ class TTTBoard
     wins
   end
   
+  # Draws lines between rows when printing the board.
   def row_separator
     line = Defaults::BORDER_SPACING + '   ' + (@dimension.times { '---' }).join(' ')
   end
   
+  # Draws cells for a given row.
   def row_cells(row)
     row_label = (@dimension - row).to_s
     line = Defaults::BORDER_SPACING + row_label
@@ -111,16 +113,12 @@ class TTTBoard
     line += '|'
   end
   
+  # Draws letters for columns for chess notation.
   def column_labels
     line = Defaults::BORDER_SPACING + '    ' + (@dimension.times { |i| (i + 65).chr }).join('   ')
-    #line = Defaults::BORDER_SPACING + '   '
-    #@dimension.times |column_index|
-    #  current_column = column_index + 65
-    #  line += ' #{current_column.chr}  '
-    #end
-    #line
   end
   
+  # Converts a credible row number into its matching Cell array index.
   def sanitize_row(row)
     (@dimension - row).abs
   end
@@ -134,6 +132,7 @@ class TTTBoard
     empty
   end
   
+  # Checks if a given row and column exists in the Cells array.
   def cell_exists?(row, column)
     if (0...@dimension).include?(row) && (0...@dimension).include?(column)
       exists = true
@@ -145,6 +144,7 @@ class TTTBoard
   
 end
 
+# Illustration of how the game board should appear.
 #   --- --- ---
 #3 |   |   |   |
 #   --- --- ---
