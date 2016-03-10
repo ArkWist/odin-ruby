@@ -15,6 +15,7 @@ class TTTGame
   
   private
   
+  # Initialize the board and players.
   def set_up_game
     @board = TTTBoard.new(ask_dimension)
     @players = @players.each_with_index do |person, index|
@@ -35,6 +36,7 @@ class TTTGame
     dimension
   end
   
+  # Ask if a player will be human or the computer.
   def ask_controller(player_number)
     response = Selections.choose_from_options('Is #{player_number} human?', 'y', 'n')
     case response
@@ -47,11 +49,11 @@ class TTTGame
   end
   
   def play    
-    #take turn, then check, then set next turn
     game_over = false
     current_player = 0
     @board.draw_board
     
+    # Primary game loop.
     while !game_over
       move = @players[current_player].make_move
       if !@board.cell_is_empty?(move)
@@ -59,7 +61,7 @@ class TTTGame
       else
         @board.set_move(@players[current_player].player_icon, move)
         @board.draw_board
-        if @board.victorious?(@players[current_player], move)
+        if @board.is_victorious?(@players[current_player], move)
           game_over = true
         end
         unless game_over { current_player = next_player(current_player) }
@@ -81,14 +83,3 @@ class TTTGame
     puts "Player #{winner.player_number} is victorious."
   end
 end
-
-  def ask_dimension
-    response = Selections.choose_from_options('Use default (#{Defaults::DIMENSION}x#{Defaults::DIMENSION}) board?', 'y', 'n')
-    case response
-    when 'y'
-      dimension = Defaults::DIMENSION
-    when 'n'
-      dimension = Selections.choose_from_range('How large a board?', '3', '9')
-    end
-    dimension
-  end
