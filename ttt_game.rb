@@ -59,7 +59,7 @@ class TTTGame
       else
         @board.set_move(@players[current_player].player_icon, move)
         @board.draw_board
-        if @board.victorious?(@players[current_player])
+        if @board.victorious?(@players[current_player], move)
           game_over = true
         end
         unless game_over { current_player = next_player(current_player) }
