@@ -35,7 +35,7 @@ class Player
       print "Choose your position (ex: A2): "
       move = gets.chomp.upcase
       begin
-        column = move[0].order - 65
+        column = move[0].ord - 65
         row = move[1].to_i
       rescue
         puts "Invalid position. Please choose a letter number combination."
