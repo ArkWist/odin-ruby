@@ -40,32 +40,58 @@ class TTTBoard
     @cells[row][column].set_value(icon)
   end
   
-  def victorious?(current_player)
-    wins = false
-    
-    @dimension.times do |seed|
-      across = victory_check()
-      down = victory_check()
-      if seed == 0 || seed == @dimension - 1
-        diagonal_down = victory_check()
-        diagonal_up = victory_check()
+  def victorious?(player, move)
+    icon = player.player_icon
+    row = move[0]
+    column = move[1]
+    if win_across?(icon, row) || win_down?(icon, column) || win_diagonal?(icon, row, column)
+      wins = true
+    else
+      wins = false
+    end
+    wins
+  end
+  
+  private
+  
+  def win_across?(icon, row)
+    if @cells[row].all? { |cell| cell.value == icon }
+      wins = true
+    else
+      wins = false
+    end
+    wins
+  end
+  
+  def win_down?(icon, column)
+    wins = true
+    for i in 0...@dimension
+      if @cells[i][column] != icon
+        wins = false
       end
     end
-    @dimension.times do |current_column|
-      down = victory_check()
+    wins
+  end
+  
+  def win_diagonal?(icon, row, column)
+    wins = true
+    if row == 0 && column == 0
+      for i in 0...@dimension
+        if @cells[i][i] != icon
+          wins = false
+        end
+      end
+    elsif row == @dimension - 1 && column == 0
+      for i in 0...@dimension
+        if @cells[@dimension - 1 - i][i] != icon
+          wins = false
+        end
+      end
+    else
+      wins = false
     end
+    wins
   end
-  
-  def victory_check(seed)
-    
-  end
-      
-    
-    # check first cell, if then check second, if then check third
-  
-  end
-    
-  private
   
   def row_separator
     line = Defaults::BORDER_SPACING + '   ' + (@dimension.times { '---' }).join(' ')
