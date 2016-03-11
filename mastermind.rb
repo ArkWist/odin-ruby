@@ -54,7 +54,7 @@ Game Loop:
   
   Loop:
     codebreaker makes a guess
-    codemaker marks guess (marking interface: automatic? manual?)
+    codemaker rates guess (marking interface: automatic? manual?)
     If breaks code
       victory
     If no rows
@@ -62,5 +62,11 @@ Game Loop:
   End
 End
 
-
-
+# Rating the guess should work the same as Making the guess
+# Enter perfect and close
+# Same interface
+# So hold current row:
+#   codebreaker puts guess into guess_row::code
+#   codemaker (if AI) references code_row
+#   codemaker puts rating into guess_row::score
+# Then do victory check
