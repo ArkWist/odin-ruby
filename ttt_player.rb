@@ -1,7 +1,10 @@
 # Required by class::TTTGame.
 # Shares namespace with class::TTTGame.
 
+require "ttt_helper.rb"
+
 class Player
+  include AI
   attr_reader :player_number, :human_controller, :player_icon
 
   def initialize(icon = '?', human_controller = true)
@@ -29,7 +32,18 @@ class Player
     @human = !@human
   end
   
-  def make_move
+  def make_move(board)
+    if is_human?
+      move = human_move
+    elsif is_computer?
+      move = computer_move(board)
+    else
+      move = human_move
+    end
+    move
+  end
+  
+  def human_move
     credible_move = nil
     until credible_move
       print "Choose your position (ex: A2): "
@@ -47,6 +61,12 @@ class Player
     end
     credible_move
   end
+  
+  def computer_move(board)
+    
+    check valid moves
+  
+    move
+  end
+  
 end
-
-
