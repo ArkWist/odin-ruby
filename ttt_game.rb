@@ -55,7 +55,7 @@ class TTTGame
     
     # Primary game loop.
     while !game_over
-      move = @players[current_player].make_move
+      move = @players[current_player].make_move(@board)
       if !@board.cell_is_empty?(move)
         next
       else
