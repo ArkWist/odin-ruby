@@ -21,12 +21,46 @@
 #Board should have Rows
 #  Rows should have Scores and Guesses
 
-class Player
-  class Human < Player
-  class AI < Player
+Main
+  @codemaker = Player.new
+  @codebreaker = Player.new
+  @board
 
-class Board
-  def draw
-  class Row
-    class Score
-    class Guess
+  class Player
+    @controller
+    ? @player_type
+    class Human < Player
+    class AI < Player
+
+  class Board
+    def draw
+    @row_count
+    @symbol_count
+    @guess_rows[]
+    @code_row[]
+    class Row
+      class Score
+        @score
+      class Code
+        @symbol
+
+# Problem with AI in Tic-Tac-Toe was Player couldn't access Board
+# But Board is parallel to Player
+# So the main program should pass Board data to Player
+# However, for Mastermind, this is unnecessary
+
+Game Loop:
+  codemaker choose code
+  
+  Loop:
+    codebreaker makes a guess
+    codemaker marks guess (marking interface: automatic? manual?)
+    If breaks code
+      victory
+    If no rows
+      loss
+  End
+End
+
+
+
