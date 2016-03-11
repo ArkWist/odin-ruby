@@ -44,3 +44,9 @@ module Selections
   end
 
 end
+
+module AI
+
+  
+
+end
