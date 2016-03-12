@@ -1,7 +1,7 @@
 # Required by class::TTTGame.
 # Shares namespace with class::TTTGame.
 
-require "ttt_helper.rb"
+require "./ttt_helper.rb"
 
 class Player
   include AI

@@ -1,6 +1,6 @@
-require "ttt_board.rb"
-require "ttt_player.rb"
-require "ttt_helper.rb"
+require "./ttt_board.rb"
+require "./ttt_player.rb"
+require "./ttt_helper.rb"
 
 class TTTGame
   include Defaults

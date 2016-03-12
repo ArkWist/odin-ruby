@@ -1,5 +1,5 @@
-require "ttt_game.rb"
-require "ttt_helper.rb"
+require "./ttt_game.rb"
+require "./ttt_helper.rb"
 
 include Selections
 
