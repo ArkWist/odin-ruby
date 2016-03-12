@@ -3,6 +3,10 @@ module Defaults
   DIMENSION = 3
   BORDER_SPACING = ' '
   
+#  def default_dimension
+#    DIMENSION
+#  end
+  
 end
 
 module Selections
@@ -16,14 +20,15 @@ module Selections
       if option.include?(user_input)
         response = user_input
       else
-        continue
+        puts invalid_input
+        next
       end
     end
     response
   end
   
   def choose_from_range(question, min, max)
-    question += ' (#{min} - #{max}): '
+    question += " (#{min} - #{max}): "
     response = nil
     until response
       print question
@@ -31,10 +36,15 @@ module Selections
       if user_input >= min && user_input <= max
         response = user_input
       else
-        continue
+        invalid_input
+        next
       end
     end
     response
+  end
+  
+  def invalid_input
+    puts "That response is invalid."
   end
   
   def choose_row_index

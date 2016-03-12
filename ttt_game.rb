@@ -26,7 +26,7 @@ class TTTGame
   end
   
   def ask_dimension
-    response = Selections.choose_from_options('Use default (#{Defaults::DIMENSION}x#{Defaults::DIMENSION}) board?', 'y', 'n')
+    response = Selections.choose_from_options("Use default (#{Defaults::DIMENSION}×#{Defaults::DIMENSION}) board?", 'y', 'n')
     case response
     when 'y'
       dimension = Defaults::DIMENSION
@@ -38,7 +38,7 @@ class TTTGame
   
   # Ask if a player will be human or the computer.
   def ask_controller(player_number)
-    response = Selections.choose_from_options('Is #{player_number} human?', 'y', 'n')
+    response = Selections.choose_from_options("Is #{player_number} human?", 'y', 'n')
     case response
     when 'y'
       human_controller = true
