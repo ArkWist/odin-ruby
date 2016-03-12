@@ -64,7 +64,9 @@ class TTTGame
         if @board.is_victorious?(@players[current_player], move)
           game_over = true
         end
-        unless game_over { current_player = next_player(current_player) }
+        if !game_over
+          current_player = next_player(current_player)
+        end
       end
     end
     end_game(current_player)

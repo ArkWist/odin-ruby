@@ -13,7 +13,7 @@ module Selections
     until response
       print question
       user_input = gets.chomp.downcase
-      if user_input.include?(option)
+      if option.include?(user_input)
         response = user_input
       else
         continue

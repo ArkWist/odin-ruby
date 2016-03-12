@@ -13,13 +13,14 @@ class TTTBoard
   end
   
   def draw_board
-    unless @dimension = 0
+    unless @dimension == 0
       puts row_separator
       @dimension.times do |row_index|
         puts row_cells(row_index)
         puts row_separators
       end
       puts column_labels
+    end
   end
   
   def cell_is_empty?(move)
