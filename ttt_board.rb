@@ -103,13 +103,13 @@ class TTTBoard
   # Draws cells for a given row.
   def row_cells(row)
     row_label = (@dimension - row).to_s
-    line = Defaults::BORDER_SPACING + row_label
+    line = Defaults::BORDER_SPACING + row_label + " "
     
-    row.times do |current_cell|
-      if @cells[row][current_cell].is_empty?            # Check if this 'row' is the correct variable.
+    @dimension.times do |cell|
+      if @cells[row][cell].is_empty?
         line += "|   "
       else
-        line += "| #{@cells[current_row][current_cell]} "
+        line += "| #{@cells[row][cell]} "
       end
     end
     line += "|"
