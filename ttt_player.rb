@@ -47,7 +47,7 @@ class Player
   def human_move
     credible_move = nil
     until credible_move
-      print "Choose your position (ex: A2): "
+      print "Player #{player_number}, choose your position (ex: A2): "
       move = gets.chomp.upcase
       begin
         column = move[0].ord - 65
@@ -55,7 +55,7 @@ class Player
       rescue
         puts "Invalid position. Please choose a letter number combination."
       else
-        row = move[0].order - 65
+        row = move[0].ord - 65
         column = move[1].to_i
         credible_move = Array.new(row, column)
       end

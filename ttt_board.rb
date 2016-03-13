@@ -25,6 +25,7 @@ class TTTBoard
   
   def cell_is_empty?(move)
     row = move[0]
+    puts "TEST (TTTBoard line 28): #{row}"
     column = move[1]
     row = sanitize_row(row)
     if cell_empty?(row, column)
