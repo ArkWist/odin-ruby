@@ -6,6 +6,7 @@ require "./ttt_helper.rb"
 class Player
   include AI
   attr_reader :player_number, :human_controller, :player_icon
+  attr_writer :player_number
 
   def initialize(icon = '?', human_controller = true)
     @player_icon = icon

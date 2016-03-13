@@ -19,10 +19,10 @@ class TTTGame
   def set_up_game
     @board = TTTBoard.new(ask_dimension)
     @players = @players.each_with_index do |person, index|
-      person.set_player_number(index + 1)
+      person.player_number = index + 1
       person.set_controller(ask_controller(person.player_number))
     end
-    @board.set_board
+    #@board.set_board
   end
   
   def ask_dimension
@@ -38,7 +38,7 @@ class TTTGame
   
   # Ask if a player will be human or the computer.
   def ask_controller(player_number)
-    response = Selections.choose_from_options("Is #{player_number} human?", 'y', 'n')
+    response = Selections.choose_from_options("Is Player #{player_number} human?", 'y', 'n')
     case response
     when 'y'
       human_controller = true

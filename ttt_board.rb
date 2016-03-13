@@ -17,7 +17,7 @@ class TTTBoard
       puts row_separator
       @dimension.times do |row_index|
         puts row_cells(row_index)
-        puts row_separators
+        puts row_separator
       end
       puts column_labels
     end
@@ -96,7 +96,8 @@ class TTTBoard
   
   # Draws lines between rows when printing the board.
   def row_separator
-    line = Defaults::BORDER_SPACING + '   ' + (@dimension.times { '---' }).join(' ')
+    #line = Defaults::BORDER_SPACING + '   ' + (@dimension.times { '---' }).join(' ')
+    line = Defaults::BORDER_SPACING + "   " + ("--- " * @dimension).strip
   end
   
   # Draws cells for a given row.
@@ -105,18 +106,25 @@ class TTTBoard
     line = Defaults::BORDER_SPACING + row_label
     
     row.times do |current_cell|
-      if @cells[current_row][current_cell].is_empty?
-        line += '|   '
+      if @cells[row][current_cell].is_empty?            # Check if this 'row' is the correct variable.
+        line += "|   "
       else
-        line += '| #{@cells[current_row][current_cell]} '
+        line += "| #{@cells[current_row][current_cell]} "
       end
     end
-    line += '|'
+    line += "|"
   end
   
   # Draws letters for columns for chess notation.
   def column_labels
-    line = Defaults::BORDER_SPACING + '    ' + (@dimension.times { |i| (i + 65).chr }).join('   ')
+    #line = Defaults::BORDER_SPACING + '    ' + (@dimension.times { |i| (i + 65).chr }).join('   ')
+    labels = ""
+    @dimension.times do |i|
+      labels += (i + 65).chr
+      labels += "   "
+    end
+    labels.strip!
+    line = Defaults::BORDER_SPACING + "    " + labels
   end
   
   # Converts a credible row number into its matching Cell array index.
