@@ -28,7 +28,7 @@ class TTTBoard
   def cell_is_empty?(move)
     row = move[0]
     column = move[1]
-    row = sanitize_row(row)
+#    row = sanitize_row(row)
     if cell_empty?(row, column)
       empty = true
     else

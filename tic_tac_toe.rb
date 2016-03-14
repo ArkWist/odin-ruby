@@ -10,7 +10,9 @@ def ask_new_game
     new_game = true
   when 'n'
     new_game = false
+    puts
     puts "Game over."
+    puts
   end
   new_game
 end

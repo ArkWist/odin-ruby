@@ -59,7 +59,7 @@ class TTTGame
       if !@board.cell_is_empty?(move)
         next
       else
-        move[0] = @board.sanitize_row(move[0])
+#        move[0] = @board.sanitize_row(move[0])
         @board.set_move(@players[current_player].player_icon, move)
         @board.draw_board
         if @board.is_victorious?(@players[current_player], move)
@@ -70,7 +70,7 @@ class TTTGame
         end
       end
     end
-    end_game(current_player)
+    end_game(@players[current_player])
   end
   
   def next_player(current_player)
@@ -83,6 +83,7 @@ class TTTGame
   end
   
   def end_game(winner)
-    puts "Player #{winner.player_number} is victorious."
+    puts "Player #{winner.player_icon.to_s} is victorious."
+    puts
   end
 end

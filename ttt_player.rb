@@ -41,13 +41,14 @@ class Player
     else
       move = human_move
     end
+    move[0] = board.sanitize_row(move[0])
     move
   end
   
   def human_move
     credible_move = nil
     until credible_move
-      print "Player #{player_number}, choose your position (ex: A2): "
+      print "Player #{player_icon.to_s}, choose your position (ex: A2): "
       move = gets.chomp.upcase
       begin
         column = move[0].ord - 65
