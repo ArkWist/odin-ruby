@@ -14,23 +14,25 @@ class TTTBoard
   
   def draw_board
     unless @dimension == 0
+      puts
       puts row_separator
       @dimension.times do |row_index|
         puts row_cells(row_index)
         puts row_separator
       end
       puts column_labels
+      puts
     end
   end
   
   def cell_is_empty?(move)
     row = move[0]
-    puts "TEST (TTTBoard line 28): #{row}"
     column = move[1]
     row = sanitize_row(row)
     if cell_empty?(row, column)
       empty = true
     else
+      "Cell #{row.to_s}#{column.to_s} isn't open!"
       empty = false
     end
     empty
@@ -52,6 +54,12 @@ class TTTBoard
       wins = false
     end
     wins
+  end
+  
+  # Converts a credible row number into its matching Cell array index.
+  # This ought to be private, but I screwed up and need it elsewhere.
+  def sanitize_row(row)
+    (row - @dimension + 1).abs
   end
   
   private
@@ -126,11 +134,6 @@ class TTTBoard
     end
     labels.strip!
     line = Defaults::BORDER_SPACING + "    " + labels
-  end
-  
-  # Converts a credible row number into its matching Cell array index.
-  def sanitize_row(row)
-    (@dimension - row).abs
   end
   
   def cell_empty?(row, column)

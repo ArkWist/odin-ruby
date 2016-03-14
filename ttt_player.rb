@@ -51,13 +51,14 @@ class Player
       move = gets.chomp.upcase
       begin
         column = move[0].ord - 65
-        row = move[1].to_i
+        row = move[1].to_i - 1
       rescue
-        puts "Invalid position. Please choose a letter number combination."
+        puts "Invalid position formatting. Please choose a letter number combination."
       else
-        row = move[0].ord - 65
-        column = move[1].to_i
-        credible_move = Array.new(row, column)
+        column = (move[0].ord - 65).to_i
+        row = move[1].to_i - 1
+        #credible_move = Array.new(row, column)
+        credible_move = [row, column]
       end
     end
     credible_move
@@ -65,9 +66,9 @@ class Player
   
   def computer_move(board)
     
-    check valid moves
+    #check valid moves
   
-    move
+    #move
   end
   
 end

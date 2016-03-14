@@ -59,6 +59,7 @@ class TTTGame
       if !@board.cell_is_empty?(move)
         next
       else
+        move[0] = @board.sanitize_row(move[0])
         @board.set_move(@players[current_player].player_icon, move)
         @board.draw_board
         if @board.is_victorious?(@players[current_player], move)
