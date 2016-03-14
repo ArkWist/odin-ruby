@@ -12,7 +12,7 @@ end
 module Selections
 
   def choose_from_options(question, *option)
-    question += ' (' + option.join('/') + '): '
+    question += " (" + option.join("/") + "): "
     response = nil
     until response
       print question
@@ -20,7 +20,7 @@ module Selections
       if option.include?(user_input)
         response = user_input
       else
-        puts invalid_input
+        invalid_input
         next
       end
     end

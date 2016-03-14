@@ -31,7 +31,7 @@ class TTTGame
     when 'y'
       dimension = Defaults::DIMENSION
     when 'n'
-      dimension = Selections.choose_from_range('How large a board?', '3', '9')
+      dimension = Selections.choose_from_range('How large a board?', '3', '9').to_i
     end
     dimension
   end
