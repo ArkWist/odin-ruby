@@ -70,3 +70,6 @@ End
 #   codemaker (if AI) references code_row
 #   codemaker puts rating into guess_row::score
 # Then do victory check
+
+# Game should tell Player to do something again if answer makes no sense
+# This should not be Player responsibility
