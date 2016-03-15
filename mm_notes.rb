@@ -73,3 +73,12 @@ End
 
 # Game should tell Player to do something again if answer makes no sense
 # This should not be Player responsibility
+
+#-----------------
+#CHECKING COMMANDS
+#First, check if it's an argument
+#if it's an argument, do the command
+#Next, check if it's a code
+#if it's a code, put in the code
+#Last, if it's neither, throw it out
+
