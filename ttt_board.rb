@@ -85,13 +85,13 @@ class TTTBoard
   
   def win_diagonal?(icon, row, column)
     wins = true
-    if row == 0 && column == 0
+    if (row == 0 && column == 0) || center_square?(row, column)
       for i in 0...@dimension
         if @cells[i][i] != icon
           wins = false
         end
       end
-    elsif row == @dimension - 1 && column == 0
+    elsif (row == @dimension - 1 && column == 0) || center_square?(row, column)
       for i in 0...@dimension
         if @cells[@dimension - 1 - i][i] != icon
           wins = false
@@ -102,6 +102,20 @@ class TTTBoard
     end
     wins
   end
+  
+  def center_square?(row, column)
+    if @dimension.odd?
+      board_size = @dimension - 1.0
+      if board_size % row == 2.0 && board_size % column == 2.0
+        center = true
+      else
+        center = false
+      end
+    else
+      center = false
+    end
+    center
+  end      
   
   # Draws lines between rows when printing the board.
   def row_separator
