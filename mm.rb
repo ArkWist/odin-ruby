@@ -1,6 +1,6 @@
 ################################################################################
 #                                                                              #
-#                                  Mastermind                                  #
+#                              M A S T E R M I N D                             #
 #                                                                              #
 #                                       https://github.com/ArkWist/mastermind/ #
 # ---------------------------------------------------------------------------- #
@@ -58,6 +58,16 @@
 
 #$log.debug "Sample debug message 1"
 #$log.debug("Sample debug message 2")
+
+module Commands
+
+  def execute(cmd, args)
+
+  
+  end
+end
+
+include Commands
 
 ################################################################################
 # Main Methods                                                       [methods] #
@@ -123,6 +133,8 @@ def execute_command(cmd, args)
       codebreaker = true
     when args.include?("-m")
       codemaker = true
+    when args.include?("-a")
+      codebreak, codemaker = false
     when args.include?("-d")
       enable_debug
     end
@@ -153,9 +165,31 @@ loop do
   cmd, args = get_commands
 
   next if invalid_command(cmd, args, @main_args)
-  break if cmd == "quit" && args.include?("-e")
-  
-  execute_command(cmd, args)
+#  break if cmd == "quit" && args.include?("-e")
+#  execute_command(cmd, args)
+
+=begin 
+  case cmd
+  when "play"
+    codebreaker, codemaker = false  # Can I comment this out?
+    case args
+    when args.include?(:no_arg)
+      codebreaker, codemaker = true
+    when args.include?("-b")
+      codebreaker = true
+    when args.include?("-m")
+      codemaker = true
+    when args.include?("-d")
+      enable_debug
+    end
+    start_game(codebreaker, codemaker)
+  when "quit"
+    case args
+    when args.incude?(:no_arg)  
+=end
+
+
+
 end
 
 ################################################################################
