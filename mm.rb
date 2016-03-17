@@ -36,6 +36,7 @@
 
 # Initialize Defaults ##########################################################
   @colors = (((1 + 64).chr)..((@colors + 64).chr)).to_a  # Converts to letters.
+  @scores = ["!", ":", "."]
 
 # Main program arguments list
   @main_args = Hash.new
@@ -82,7 +83,7 @@ def print_menu
   puts "    -m  maker    Play as codemaker vs AI" if @breaker_ai
   puts "    -a  ai       Cede both sides to AI" if @maker_ai && @breaker_ai
   puts "    -d  debug    Show debug messages" if @allow_debug
-  puts "  quit           Quit the current game"
+  puts "  quit           Quit the current game"     # Maybe make this exit game and program?
   puts "    -r  restart  Restart the current game"
   puts "    -e  end      End the program"
   puts "  show           Show codemaker's code" if @allow_show
@@ -90,13 +91,6 @@ def print_menu
 end
 
 # Command Handling #############################################################
-
-#def get_commands
-#  args = gets.chomp.delete(" ").split(/(?=[-])/)
-#  cmd = args.shift
-#  args = [:no_arg] if args.empty?
-#  return cmd, args
-#end
 
 def get_cmds
   cmd, args = separate_cmds(gets.chomp)
@@ -110,19 +104,19 @@ def separate_cmds(args)
   return cmd, args
 end
 
-def invalid_cmd?(cmd, args, legal_args)
-  if !valid_cmd?(cmd, args, @all_args)      # Check command exists.
+def valid_cmd?(cmd, args, legal_args)
+  if !cmds_in_list?(cmd, args, @all_args)      # Check command exists.
     puts "Command not recognized."
     invalid = true
-  elsif !valid_cmd?(cmd, args, legal_args)  # Check command is legal.
+  elsif !cmds_in_list?(cmd, args, legal_args)  # Check command is legal.
     puts "Command not legal."
     invalid = true
   end
-  return true && invalid
+  !invalid
 end
 
-def valid_cmd?(cmd, args, legal_cmds)
-  valid = legal_cmds.key?(cmd) &&  \
+def cmds_in_list?(cmd, args, legal_cmds)
+  legal_cmds.key?(cmd) &&  \
     args.all? { |arg| legal_cmds[cmd].include?(arg) } ? true : false 
 end
 
@@ -182,10 +176,15 @@ end
 def new_game(human_maker, human_breaker)
 puts "PROC: new_game"
   board = Board.new(@guesses, @colors, @code_length)
-  codemaker = assign_player(human_maker)
-  codebreaker = assign_player(human_breaker)
-  answer = get_answer(codemaker)
-  game_loop(board, codemaker, codebreaker, answer)
+  codemaker = assign_player(human_maker, true)
+  codebreaker = assign_player(human_breaker, false)
+  answer = get_guess(codemaker) { guess = person.get_code }
+  
+  if answer[0].length > 1
+    execute_cmd(answer[0], answer[1, -1])
+  else
+    game_loop(board, codemaker, codebreaker, answer)
+  end
 end
 
 def enable_debug
@@ -210,31 +209,93 @@ end
 
 # Command Procedure Helper Methods #############################################
 
-def assign_player(is_human)
-  is_human ? Human.new : Comp.new(@colors, @code_length)
+def assign_player(is_human, is_maker)
+  is_human ? Human.new(is_maker) : Comp.new(is_maker, @colors, @code_length)
 end
 
-def get_answer(codemaker)
-  loop do
-    answer = codemaker.get_code
+def get_guess(person)
+  until answer
+    yield
     cmd, args = separate_cmds
     
-    if !invalid_cmd?(cmd, args, @game_args)
-      execute_cmd(cmd, args).call
+    if valid_code?(cmd, args)
+        guess = cmd.split
+    elsif valid_cmd?(cmd, args, @game_args)
+      guess = cmd + args
+    else
+      guess = false
     end
-    
   end
+  guess
+end
+
+def get_score(person)
+  until answer
+    yield
+    cmd, args = separate_cmds
+    
+    if valid_score?(cmd, args)
+        score = cmd.split
+    elsif valid_cmd?(cmd, args, @game_args)
+      score = cmd + args
+    else
+      score = false
+    end
+  end
+  score
+end
+
+# Code Handling ################################################################
+
+def valid_code?(cmd, args)
+  code_in_list?(cmd, args, @colors) && cmd.length == @code_length ? true : false
+end
+
+def valid_score?(cmd, args)
+  code_in_list?(cmd, args, @scores) ? true : false
+end
+
+def code_in_list?(cmd, args, colors)
+  cmd.split.all? { |letter| colors.include?(letter) } &&  \
+    args.all? { |arg| arg == :no_arg } ? true : false
 end
 
 # Game Loop ####################################################################
 
 def game_loop(board, codemaker, codebreaker, answer)
-  board.guesses.each do |row|
-  
-    board.print
-  
-  end
+  @board = board
+  @board.guesses.each do |row|
+    @board.print
+    guess = get_guess(codebreaker) { guess = person.get_code }
+    
+    if guess[0].length > 1
+      execute_cmd(guess[0], guess[1, -1]).call
+    else
+      row.add_guess(guess)
+    end
+    
+    @board.print
+    score = get_score(codemaker) { score = person.get_score }
 
+    if score[0].length > 1
+      execute_cmd(score[0], score[1, -1]).call
+    else
+      if score = Array.new(@code_length) { "!" }
+      codebreaker.victory
+      @board.game_over(true)
+    end
+    
+    break if @board.game_over?
+  end
+  
+  if !@board.with_victory?
+    codemaker.victory
+  end
+  
+  puts
+  puts "GAME SET"
+  puts
+  
 end
 
 ################################################################################
@@ -247,7 +308,7 @@ loop do
   print "COMMAND: "
   cmd, args = get_cmds
 
-  next if invalid_cmd?(cmd, args, @main_args)
+  next if !valid_cmd?(cmd, args, @main_args)
   execute_cmd(cmd, args).call
 end
 
