@@ -125,20 +125,20 @@ def execute_cmd(cmd, args)      # Call only if ::invalid_command is false!
 end
 
 def get_play_proc(args)
-  human_breaker, human_maker = false
+  human_maker, human_breaker = false
   case args
   when args.include?(:no_arg)
-    human_breaker, human_maker = false
+    human_maker, human_breaker = false
   when args.include?("-b")
     human_breaker = true
   when args.include?("-m")
     human_maker = true
   when args.include?("-a")
-    human_breaker, human_maker = false
+    human_maker, human_breaker = false
   when args.include?("-d")
     enable_debug
   end
-  proc = Proc.new { new_game(human_breaker, human_maker) }
+  proc = Proc.new { new_game(human_maker, human_breaker) }
 end
 
 def get_quit_proc(args)
@@ -163,8 +163,13 @@ end
 
 # Command Procedures ###########################################################
 
-def new_game(human_breaker, human_maker)
+def new_game(human_maker, human_breaker)
   puts "PROC: new_game"
+  @board = Board.new(@guesses, @colors)
+  @codemaker = assign_player(human_maker)
+  @codebreaker = assign_player(human_breaker)
+  @code = @codemaker.make_code
+  game_loop(@board, @codemaker, @codebreaker, @code)
 end
 
 def enable_debug
@@ -186,6 +191,25 @@ end
 def show_code
   puts "PROC: show_code"
 end
+
+# Command Procedure Helper Methods #############################################
+
+def assign_player(is_human)
+  is_human ? Human.new : Comp.new
+end
+
+# Game Loop ####################################################################
+
+def game_loop(@board, @codemaker, @codebreaker, @code)
+  @board.rows.times do
+  
+    @board.print
+  
+  end
+
+end
+
+
 
 ################################################################################
 # Main Program (main loop)                                              [main] #
