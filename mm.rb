@@ -22,7 +22,9 @@
   @title = "Mastermind"
   @colors = 6       # Should exceed 1.
   @guesses = 10     # Should exceed 0. Guesses equate to rows.
+  @code_length = 4
   @menu_width = 47
+
 # Booleans
   @allow_debug = true
   @allow_show = true
@@ -34,6 +36,7 @@
 
 # Initialize Defaults ##########################################################
   @colors = (((1 + 64).chr)..((@colors + 64).chr)).to_a  # Converts to letters.
+
 # Main program arguments list
   @main_args = Hash.new
   @main_args["play"] = [:no_arg]
@@ -43,6 +46,7 @@
   @main_args["play"] += ["-d"] if @allow_debug
   @main_args["quit"] = ["-e"]
   @main_args["show"] = [:no_arg] if @allow_show
+
 # Game loops argument list
   @game_args = Hash.new
   @game_args["quit"] = ["-r", "-e"]
@@ -63,7 +67,7 @@
 # Main Methods                                                       [methods] #
 ################################################################################
 
-private def print_menu
+def print_menu
   separator = "-" * @menu_width
   puts "\n" + separator
   puts @title.split("").join(" ").upcase.center(@menu_width)
@@ -87,25 +91,37 @@ end
 
 # Command Handling #############################################################
 
-def get_commands
-  args = gets.chomp.delete(" ").split(/(?=[-])/)
+#def get_commands
+#  args = gets.chomp.delete(" ").split(/(?=[-])/)
+#  cmd = args.shift
+#  args = [:no_arg] if args.empty?
+#  return cmd, args
+#end
+
+def get_cmds
+  cmd, args = separate_cmds(gets.chomp)
+  return cmd, args
+end
+
+def separate_cmds(args)
+  args = args.delete(" ").split(/(?=[-])/)
   cmd = args.shift
   args = [:no_arg] if args.empty?
   return cmd, args
 end
 
-def invalid_command(cmd, args, legal_args)
-  if !valid_command?(cmd, args, @all_args)      # Check command exists.
+def invalid_cmd?(cmd, args, legal_args)
+  if !valid_cmd?(cmd, args, @all_args)      # Check command exists.
     puts "Command not recognized."
     invalid = true
-  elsif !valid_command?(cmd, args, legal_args)  # Check command is legal.
+  elsif !valid_cmd?(cmd, args, legal_args)  # Check command is legal.
     puts "Command not legal."
     invalid = true
   end
   return true && invalid
 end
 
-def valid_command?(cmd, args, legal_cmds)
+def valid_cmd?(cmd, args, legal_cmds)
   valid = legal_cmds.key?(cmd) &&  \
     args.all? { |arg| legal_cmds[cmd].include?(arg) } ? true : false 
 end
@@ -164,52 +180,62 @@ end
 # Command Procedures ###########################################################
 
 def new_game(human_maker, human_breaker)
-  puts "PROC: new_game"
-  @board = Board.new(@guesses, @colors)
-  @codemaker = assign_player(human_maker)
-  @codebreaker = assign_player(human_breaker)
-  @code = @codemaker.make_code
-  game_loop(@board, @codemaker, @codebreaker, @code)
+puts "PROC: new_game"
+  board = Board.new(@guesses, @colors, @code_length)
+  codemaker = assign_player(human_maker)
+  codebreaker = assign_player(human_breaker)
+  answer = get_answer(codemaker)
+  game_loop(board, codemaker, codebreaker, answer)
 end
 
 def enable_debug
-  puts "METHOD: enable_debug"
+puts "METHOD: enable_debug"
 end
 
 def quit_game
-  puts "PROC: quit_game"
+puts "PROC: quit_game"
 end
 
 def restart_game
-  puts "PROC: restart_game"
+puts "PROC: restart_game"
 end
 
 def quit_program
-  puts "PROC: quit_program"
+puts "PROC: quit_program"
 end
 
 def show_code
-  puts "PROC: show_code"
+puts "PROC: show_code"
 end
 
 # Command Procedure Helper Methods #############################################
 
 def assign_player(is_human)
-  is_human ? Human.new : Comp.new
+  is_human ? Human.new : Comp.new(@colors, @code_length)
+end
+
+def get_answer(codemaker)
+  loop do
+    answer = codemaker.get_code
+    cmd, args = separate_cmds
+    
+    if !invalid_cmd?(cmd, args, @game_args)
+      execute_cmd(cmd, args).call
+    end
+    
+  end
 end
 
 # Game Loop ####################################################################
 
-def game_loop(@board, @codemaker, @codebreaker, @code)
-  @board.rows.times do
+def game_loop(board, codemaker, codebreaker, answer)
+  board.guesses.each do |row|
   
-    @board.print
+    board.print
   
   end
 
 end
-
-
 
 ################################################################################
 # Main Program (main loop)                                              [main] #
@@ -219,16 +245,11 @@ print_menu
 
 loop do
   print "COMMAND: "
-  cmd, args = get_commands
+  cmd, args = get_cmds
 
-  next if invalid_command(cmd, args, @main_args)
+  next if invalid_cmd?(cmd, args, @main_args)
   execute_cmd(cmd, args).call
 end
 
-################################################################################
-
-#codemaker = Player.new
-#codebreaker = Player.new
-#board = Board.new
 
 ################################################################################
