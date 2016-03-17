@@ -59,21 +59,11 @@
 #$log.debug "Sample debug message 1"
 #$log.debug("Sample debug message 2")
 
-module Commands
-
-  def execute(cmd, args)
-
-  
-  end
-end
-
-include Commands
-
 ################################################################################
 # Main Methods                                                       [methods] #
 ################################################################################
 
-def print_menu
+private def print_menu
   separator = "-" * @menu_width
   puts "\n" + separator
   puts @title.split("").join(" ").upcase.center(@menu_width)
@@ -107,12 +97,12 @@ end
 def invalid_command(cmd, args, legal_args)
   if !valid_command?(cmd, args, @all_args)      # Check command exists.
     puts "Command not recognized."
-    valid = false
+    invalid = true
   elsif !valid_command?(cmd, args, legal_args)  # Check command is legal.
     puts "Command not legal."
-    valid = false
+    invalid = true
   end
-  return true && valid
+  return true && invalid
 end
 
 def valid_command?(cmd, args, legal_cmds)
@@ -122,37 +112,80 @@ end
 
 # Command Execution ############################################################
 
-def execute_command(cmd, args)
+def execute_cmd(cmd, args)      # Call only if ::invalid_command is false!
   case cmd
   when "play"
-    codebreaker, codemaker = false
-    case args
-    when args.include?(:no_arg)
-      codebreaker, codemaker = true
-    when args.include?("-b")
-      codebreaker = true
-    when args.include?("-m")
-      codemaker = true
-    when args.include?("-a")
-      codebreak, codemaker = false
-    when args.include?("-d")
-      enable_debug
-    end
-    start_game(codebreaker, codemaker)
+    proc = get_play_proc(args)
   when "quit"
-    case args
-    when args.incude?(:no_arg)
-### LEFT OFF HERE
-
-### HOW SHOULD THE GAME BE QUIT? HOW END THE GAME LOOP?
-  
+    proc = get_quit_proc(args)
+  when "show"
+    proc = get_show_proc(args)
   end
-      
-    
-  
+  proc
 end
 
-private :execute_command
+def get_play_proc(args)
+  human_breaker, human_maker = false
+  case args
+  when args.include?(:no_arg)
+    human_breaker, human_maker = false
+  when args.include?("-b")
+    human_breaker = true
+  when args.include?("-m")
+    human_maker = true
+  when args.include?("-a")
+    human_breaker, human_maker = false
+  when args.include?("-d")
+    enable_debug
+  end
+  proc = Proc.new { new_game(human_breaker, human_maker) }
+end
+
+def get_quit_proc(args)
+  case args
+  when args.include?(:no_arg)
+    proc = Proc.new { quit_game }
+  when args.include?("-r")
+    proc = Proc.new { restart_game }
+  when args.include?("-e")
+    proc = Proc.new { quit_program }
+  end
+  proc
+end
+
+def get_show_proc(args)
+  case args
+  when args.include?(:no_arg)
+    proc = Proc.new { show_code }
+  end
+  proc
+end
+
+# Command Procedures ###########################################################
+
+def new_game(human_breaker, human_maker)
+  puts "PROC: new_game"
+end
+
+def enable_debug
+  puts "METHOD: enable_debug"
+end
+
+def quit_game
+  puts "PROC: quit_game"
+end
+
+def restart_game
+  puts "PROC: restart_game"
+end
+
+def quit_program
+  puts "PROC: quit_program"
+end
+
+def show_code
+  puts "PROC: show_code"
+end
 
 ################################################################################
 # Main Program (main loop)                                              [main] #
@@ -165,31 +198,7 @@ loop do
   cmd, args = get_commands
 
   next if invalid_command(cmd, args, @main_args)
-#  break if cmd == "quit" && args.include?("-e")
-#  execute_command(cmd, args)
-
-=begin 
-  case cmd
-  when "play"
-    codebreaker, codemaker = false  # Can I comment this out?
-    case args
-    when args.include?(:no_arg)
-      codebreaker, codemaker = true
-    when args.include?("-b")
-      codebreaker = true
-    when args.include?("-m")
-      codemaker = true
-    when args.include?("-d")
-      enable_debug
-    end
-    start_game(codebreaker, codemaker)
-  when "quit"
-    case args
-    when args.incude?(:no_arg)  
-=end
-
-
-
+  execute_cmd(cmd, args).call
 end
 
 ################################################################################
