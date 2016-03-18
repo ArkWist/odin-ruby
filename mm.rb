@@ -21,7 +21,7 @@
 # Default Variables ############################################################
   @title = "Mastermind"
   @colors = 6       # Should exceed 1.
-  @guesses = 10     # Should exceed 0. Guesses equate to rows.
+  @guesses = 12     # Should exceed 0. Guesses equate to rows.
   @code_length = 4
   @menu_width = 47
 
@@ -63,6 +63,9 @@
 
 #$log.debug "Sample debug message 1"
 #$log.debug("Sample debug message 2")
+
+require "board"
+require "player"
 
 ################################################################################
 # Main Methods                                                       [methods] #
@@ -174,7 +177,9 @@ end
 # Command Procedures ###########################################################
 
 def new_game(human_maker, human_breaker)
-puts "PROC: new_game"
+  puts
+  puts "Starting New Game..."
+  puts
   board = Board.new(@guesses, @colors, @code_length)
   codemaker = assign_player(human_maker, true)
   codebreaker = assign_player(human_breaker, false)
@@ -187,24 +192,35 @@ puts "PROC: new_game"
   end
 end
 
-def enable_debug
+def enable_debug  # This hasn't been implemented yet..
 puts "METHOD: enable_debug"
 end
 
 def quit_game
-puts "PROC: quit_game"
+  puts
+  puts "Quitting game..."
+  puts
+  break
 end
 
-def restart_game
-puts "PROC: restart_game"
+def restart_game  # This probably causes a small memory leak.
+  puts
+  puts "Restarting game..."
+  puts
+  game_loop
 end
 
 def quit_program
-puts "PROC: quit_program"
+  puts
+  puts "Exiting program..."
+  puts
+  exit
 end
 
 def show_code
-puts "PROC: show_code"
+  puts
+  puts "The code is: #{answer}" 
+  puts
 end
 
 # Command Procedure Helper Methods #############################################
