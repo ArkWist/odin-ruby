@@ -3,14 +3,15 @@ class Row
   def initialize(length)
     @code = Code.new(length)
     @score = Score.new(length)
-  end
-  
-  def print_row
-    puts ""
+    @code_length = length
   end
   
   def add_guess(guess)
     @code.add(guess)
+  end
+  
+  def printable
+    return "|  " + @code.join("  ") + "  |  [ " + @score.join + " ]"
   end
   
 end
@@ -24,6 +25,7 @@ class Pegs
   def add(pegs)
     @pegs = pegs
   end
+
   
 end
 
