@@ -27,7 +27,7 @@ class Human < Player
   end
   
   def get_score
-    print "#{@title} > Enter your score (!/:/,): "
+    print "#{@title} > Enter your score (!/:/.): "
     gets.chomp
   end
 
@@ -57,7 +57,7 @@ class Comp < Player
   end
   
   def get_score
-    score = ["."]
+    score = Array.new(@code_length) { "." }
   end
 
 
