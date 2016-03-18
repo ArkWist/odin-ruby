@@ -14,24 +14,24 @@ A command line Mastermind game.
 
 ## Full Command List
 
-* play           Play as codemaker and codebreaker
-*   -b  breaker  Play as codebreaker vs AI
-*   -m  maker    Play as codemaker vs AI
-*   -a  ai       Watch the AI play both sides
-*   -d  debug    Show debug messages
-* quit           Quit the current game
-*   -r  restart  Restart the current game
-*   -e  exit     Exit the program
-* show           Show the answer (codemaker's code)
+`play`  Play as codemaker and codebreaker  
+`play` `-b`  Play as codebreaker vs AI  
+`play` `-m`  Play as codemaker vs AI  
+`play` `-a`  Watch the AI play both sides  
+`play` `-d`  Show debug messages  
+`quit`  Quit the current game  
+`quit` `-r`  Restart the current game  
+`quit` `-e`  Exit the program  
+`show`  Show the answer (codemaker's code)
 
 ## How to Play
 
 1. The codemaker enters a code of allowed length and color (letter) composition.
 2. The codebreaker tries to guess the code.
 3. The codemaker rates the accuracy of the code.
-   * `!` = right color, right spot
-   * `:` = right color, wrong spot
-   * `.` = wrong color
+  * `!` = right color, right spot
+  * `:` = right color, wrong spot
+  * `.` = wrong color
 4. The codebreaker wins if they get the right code before they run out of rows.
 5. The codemaker wins if the codebreaker runs out of rows.
 
