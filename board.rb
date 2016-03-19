@@ -14,16 +14,18 @@ class Board
   end
   
   def print
-    puts_separator
-    guesses.each_with_index do |row, index|
-      string = index < 10 ? " #{index.to_s}  " : "#{index.to_s}  "
+    puts
+    puts separator
+    @guesses.each_with_index do |row, index|
+      string = index < 9 ? " #{(index + 1).to_s}  " : "#{(index + 1).to_s}  "
       puts string + row.printable
-      puts_separator
+      puts separator
     end
+    puts
   end
   
-  def puts_separator
-    puts ("-" * 7) + ("-" * ((@code_length * 3) - 2)) + ("-" * 7) +  \
+  def separator
+    return ("-" * 7) + ("-" * ((@code_length * 3) - 2)) + ("-" * 7) +  \
       ("-" * @code_length) + ("-" * 2)
   end
   

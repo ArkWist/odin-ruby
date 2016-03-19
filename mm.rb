@@ -74,10 +74,11 @@ require "./player.rb"
 def print_menu
   separator = "-" * @menu_width
   puts "\n" + separator
-  puts @title.split("").join(" ").upcase.center(@menu_width)
+  puts @title.split(//).join(" ").upcase.center(@menu_width)
   puts
   puts "Conditions:"
   puts "  #{@colors.length} colors (#{@colors.join(", ")})"
+  puts "  #{@code_length} pegs per code"
   puts "  #{@guesses} guesses"
   puts
   puts "Instructions:"
@@ -168,16 +169,18 @@ def new_game(human_maker, human_breaker)
   codemaker = assign_player(human_maker, true)
   codebreaker = assign_player(human_breaker, false)
   answer = get_guess(codemaker)
-  
+
   if answer[0].length > 1
     execute_cmd(answer[0], answer[1, -1])
   else
+    answer = Code.new(@code_length).add(answer)
     game_loop(board, codemaker, codebreaker, answer)
   end
 end
 
 def enable_debug  # This hasn't been implemented yet..
-puts "METHOD: enable_debug"
+  puts "Enable debug display..."
+  puts
 end
 
 def quit_game
@@ -223,7 +226,7 @@ def get_guess(person)
     cmd, args = separate_cmds(guess)
 
     if valid_code?(cmd, args)
-      guess = cmd.split
+      guess = cmd.split(//)
     elsif valid_cmd?(cmd, args, @game_args)
       guess = cmd + args
     else
@@ -240,7 +243,7 @@ def get_score(person)
     cmd, args = separate_cmds(score)
     
     if valid_score?(cmd, args)
-        score = cmd.split
+        score = cmd.split(//)
     elsif valid_cmd?(cmd, args, @game_args)
       score = cmd + args
     else
@@ -261,15 +264,16 @@ def valid_score?(cmd, args)
 end
 
 def code_in_list?(cmd, args, colors)
-  cmd.split.all? { |letter| colors.include?(letter) } &&  \
+  cmd.split(//).all? { |letter| colors.include?(letter) } &&  \
     args.all? { |arg| arg == :no_arg } ? true : false
 end
 
 # Game Loop ####################################################################
 
-def game_loop(board, codemaker, codebreaker, answer)  # ERROR: The hell is the missing `end`?
+def game_loop(board, codemaker, codebreaker, answer)
   @codemaker, @codebreaker = codemaker, codebreaker
   @board = board
+  @answer = answer
   @board.guesses.each do |row|
     @board.print
     guess = get_guess(@codebreaker)
@@ -286,9 +290,11 @@ def game_loop(board, codemaker, codebreaker, answer)  # ERROR: The hell is the m
     if score[0].length > 1
       execute_cmd(score[0], score[1, -1]).call
     else
-      score = Array.new(@code_length) { "!" }
-      @codebreaker.victory
-      @board.game_over(true)
+      row.add_score(score)
+      if score.all? { |letter| letter == "!" }
+        @codebreaker.victory
+        @board.game_over(true)
+      end
     end
     
     break if @board.game_over?

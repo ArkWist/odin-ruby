@@ -1,6 +1,7 @@
 class Player
 
   def victory
+    puts
     puts "#{@title} is victorious."
   end
 

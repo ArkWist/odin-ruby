@@ -10,27 +10,31 @@ class Row
     @code.add(guess)
   end
   
+  def add_score(score)
+    @score.add(score)
+  end
+  
   def printable
-    return "|  " + @code.join("  ") + "  |  [ " + @score.join + " ]"
+    return "|  " + @code.get_code.join("  ") + "  |  [ " + @score.get_code.join("") + " ]"
   end
   
 end
 
-class Pegs
+class Code
 
   def initialize(length)
-    @pegs = Array.new(length)
+    @code = Array.new(length) {"-"}
   end
   
-  def add(pegs)
-    @pegs = pegs
+  def add(code)
+    @code = code
+  end
+  
+  def get_code
+    @code
   end
 
-  
 end
 
-class Code < Pegs
-end
-
-class Score < Pegs
+class Score < Code
 end
