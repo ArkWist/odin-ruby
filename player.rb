@@ -1,8 +1,5 @@
 class Player
 
-  def initialize
-  end
-
   def victory
     puts "#{@title} is victorious."
   end
@@ -12,7 +9,7 @@ end
 
 class Human < Player
 
-  def intialize(is_maker)
+  def initialize(is_maker)
     if is_maker
       @title = "CODEMAKER"
     else
@@ -54,6 +51,10 @@ class Comp < Player
       puts "#{@title} has made a guess."
     end
     answer
+  end
+  
+  def get_code
+    code = Array.new(@code_length) { "A" }
   end
   
   def get_score

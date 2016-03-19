@@ -1,14 +1,12 @@
-require "row"
+require "./row.rb"
 
 class Board
 
-  attr_reader :@guesses
+  attr_reader :guesses
 
   def initialize(rows, colors, code_length)
-    # @rows = [] << Row.new * rows
-    # @rows[0...rows] = Row.new
-    @answer = Row.new(length)
-    @guesses = Array.new(rows) { Row.new(length) }
+    @answer = Row.new(code_length)
+    @guesses = Array.new(rows) { Row.new(code_length) }
     @colors = colors
     @code_length = code_length
     @game_over = false
@@ -18,7 +16,7 @@ class Board
   def print
     puts_separator
     guesses.each_with_index do |row, index|
-      string = index < 10 ? print " #{index.to_s}  " : print "#{index.to_s}  "
+      string = index < 10 ? " #{index.to_s}  " : "#{index.to_s}  "
       puts string + row.printable
       puts_separator
     end

@@ -64,8 +64,8 @@
 #$log.debug "Sample debug message 1"
 #$log.debug("Sample debug message 2")
 
-require "board"
-require "player"
+require "./board.rb"
+require "./player.rb"
 
 ################################################################################
 # Main Methods                                                       [methods] #
@@ -101,7 +101,7 @@ def get_cmds
 end
 
 def separate_cmds(args)
-  args = args.delete(" ").split(/(?=[-])/)
+  args = args.to_s.delete(" ").split(/(?=[-])/)
   cmd = args.shift
   args = [:no_arg] if args.empty?
   return cmd, args
@@ -125,7 +125,7 @@ end
 
 # Command Execution ############################################################
 
-def execute_cmd(cmd, args)      # Call only if ::invalid_command is false!
+def execute_cmd(cmd, args)      # Call only if ::valid_cmd? is true!
   case cmd
   when "play"
     proc = get_play_proc(args)
@@ -138,40 +138,24 @@ def execute_cmd(cmd, args)      # Call only if ::invalid_command is false!
 end
 
 def get_play_proc(args)
-  human_maker, human_breaker = false
-  case args
-  when args.include?(:no_arg)
-    human_maker, human_breaker = false
-  when args.include?("-b")
-    human_breaker = true
-  when args.include?("-m")
-    human_maker = true
-  when args.include?("-a")
-    human_maker, human_breaker = false
-  when args.include?("-d")
-    enable_debug
-  end
+  human_maker, human_breaker = false, false
+  human_maker, human_breaker = true, true if args.include?(:no_arg)
+  human_breaker = true if args.include?("-b")
+  human_maker = true if args.include?("-m")
+  human_maker, human_breaker = false if args.include?("-a")
+  enable_debug if args.include?("-d")
   proc = Proc.new { new_game(human_maker, human_breaker) }
 end
 
-def get_quit_proc(args)
-  case args
-  when args.include?(:no_arg)
-    proc = Proc.new { quit_game }
-  when args.include?("-r")
-    proc = Proc.new { restart_game }
-  when args.include?("-e")
-    proc = Proc.new { quit_program }
-  end
+def quit_quit_proc(args)
+  proc = Proc.new { quit_game } if args.include?(:no_arg)
+  proc = Proc.new { restart_game } if args.include?("-r")
+  proc = Proc.new { quit_program } if args.include?("-e")
   proc
 end
 
 def get_show_proc(args)
-  case args
-  when args.include?(:no_arg)
-    proc = Proc.new { show_code }
-  end
-  proc
+  proc = Proc.new { show_code } if args.include?(:no_arg)
 end
 
 # Command Procedures ###########################################################
@@ -183,7 +167,7 @@ def new_game(human_maker, human_breaker)
   board = Board.new(@guesses, @colors, @code_length)
   codemaker = assign_player(human_maker, true)
   codebreaker = assign_player(human_breaker, false)
-  answer = get_guess(codemaker) { guess = person.get_code }
+  answer = get_guess(codemaker)
   
   if answer[0].length > 1
     execute_cmd(answer[0], answer[1, -1])
@@ -200,7 +184,10 @@ def quit_game
   puts
   puts "Quitting game..."
   puts
-  break
+  #break
+  #return Proc.new { break }
+  puts "...does not work and I have no idea how I should do this."
+  puts
 end
 
 def restart_game  # This probably causes a small memory leak.
@@ -230,12 +217,13 @@ def assign_player(is_human, is_maker)
 end
 
 def get_guess(person)
-  until answer
-    yield
-    cmd, args = separate_cmds
-    
+  guess = false
+  until guess
+    guess = person.get_code
+    cmd, args = separate_cmds(guess)
+
     if valid_code?(cmd, args)
-        guess = cmd.split
+      guess = cmd.split
     elsif valid_cmd?(cmd, args, @game_args)
       guess = cmd + args
     else
@@ -246,9 +234,10 @@ def get_guess(person)
 end
 
 def get_score(person)
-  until answer
-    yield
-    cmd, args = separate_cmds
+  score = false
+  until score
+    score = person.get_score
+    cmd, args = separate_cmds(score)
     
     if valid_score?(cmd, args)
         score = cmd.split
@@ -278,11 +267,12 @@ end
 
 # Game Loop ####################################################################
 
-def game_loop(board, codemaker, codebreaker, answer)
+def game_loop(board, codemaker, codebreaker, answer)  # ERROR: The hell is the missing `end`?
+  @codemaker, @codebreaker = codemaker, codebreaker
   @board = board
   @board.guesses.each do |row|
     @board.print
-    guess = get_guess(codebreaker) { guess = person.get_code }
+    guess = get_guess(@codebreaker)
     
     if guess[0].length > 1
       execute_cmd(guess[0], guess[1, -1]).call
@@ -291,22 +281,20 @@ def game_loop(board, codemaker, codebreaker, answer)
     end
     
     @board.print
-    score = get_score(codemaker) { score = person.get_score }
+    score = get_score(@codemaker)
 
     if score[0].length > 1
       execute_cmd(score[0], score[1, -1]).call
     else
-      if score = Array.new(@code_length) { "!" }
-      codebreaker.victory
+      score = Array.new(@code_length) { "!" }
+      @codebreaker.victory
       @board.game_over(true)
     end
     
     break if @board.game_over?
   end
   
-  if !@board.with_victory?
-    codemaker.victory
-  end
+  @codemaker.victory if !@board.with_victory?
   
   puts
   puts "GAME SET"
