@@ -26,8 +26,8 @@
   @menu_width = 47
 
 # Booleans
-  @allow_debug = true
-  @allow_show = true
+  @allow_debug = false
+  @allow_show = false
   @maker_ai = false
   @breaker_ai = false
   @all_args = { "play" => [:no_arg, "-b", "-m", "-a", "-d"],  \
@@ -57,12 +57,12 @@
 # Modules and External Classes                                       [modules] #
 ################################################################################
 
-#require "logger"
-#$log = Logger.new(STDOUT)
-#$log.level = Logger::DEBUG
+require "logger"
+$log = Logger.new(STDOUT)
+$log.level = Logger::DEBUG
 
-#$log.debug "Sample debug message 1"
-#$log.debug("Sample debug message 2")
+$log.debug "Sample debug message 1"
+$log.debug("Sample debug message 2")
 
 require "./board.rb"
 require "./player.rb"
