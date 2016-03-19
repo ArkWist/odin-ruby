@@ -20,7 +20,7 @@
 
 # Default Variables ############################################################
   @title = "Mastermind"
-  @colors = 6       # Should exceed 1.
+  @colors = 8       # Should exceed 1.
   @guesses = 12     # Should exceed 0. Guesses equate to rows.
   @code_length = 4
   @menu_width = 47
@@ -302,7 +302,7 @@ def game_loop(board, codemaker, codebreaker, answer)
   
   @codemaker.victory if !@board.with_victory?
   
-  puts
+  @board.print
   puts "GAME SET"
   puts
   
