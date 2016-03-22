@@ -24,7 +24,7 @@ class Human < Player
     gets.chomp
   end
   
-  def get_score
+  def get_score(guess)
     print "#{@title} > Enter your score (!/:/.): "
     gets.chomp
   end
@@ -55,11 +55,33 @@ class Comp < Player
   end
   
   def get_code
+    print "#{@title}'s guess: "
+  
+    code = #
+  
+    puts code
+    
     code = Array.new(@code_length) { "A" }
   end
   
-  def get_score
+  def get_score(guess)
+    print "#{@title}'s score: "
+  
+    score += score_perfect() + score_half()
+    score += score_wrong
+    
+    puts score
+    
     score = Array.new(@code_length) { "." }
+  end
+  
+  def score_perfect
+  end
+  
+  def score_half
+  end
+  
+  def score_wrong
   end
 
 
