@@ -236,10 +236,10 @@ def get_guess(person)
   guess
 end
 
-def get_score(person)
+def get_score(person, guess)
   score = false
   until score
-    score = person.get_score
+    score = person.get_score(guess)
     cmd, args = separate_cmds(score)
     
     if valid_score?(cmd, args)
@@ -285,7 +285,7 @@ def game_loop(board, codemaker, codebreaker, answer)
     end
     
     @board.print
-    score = get_score(@codemaker)
+    score = get_score(@codemaker, guess)
 
     if score[0].length > 1
       execute_cmd(score[0], score[1, -1]).call
