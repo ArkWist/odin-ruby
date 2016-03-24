@@ -64,24 +64,36 @@ class Comp < Player
     code = Array.new(@code_length) { "A" }
   end
   
-  def get_score(guess)
+  def get_score(guess, answer)
     print "#{@title}'s score: "
   
-    score += score_perfect() + score_half()
-    score += score_wrong
+    score += score_perfect(guess, answer) + score_half(guess, answer)
+    score += score_wrong(score, answer)
     
     puts score
     
     score = Array.new(@code_length) { "." }
   end
   
-  def score_perfect
+  def score_perfect(guess, answer)
+    perfect = ""
+    answer.each_with_index do |peg, index|
+      perfect += "!" if peg == guess[index]
+    end
+    perfect
   end
   
-  def score_half
+  def score_half(guess, answer)
+    half = ""
+    answer.each_with_index do |peg, index|
+      if guess.any?(peg) && peg != guess[index]
+        guess[guess.index(peg)] = "#"
+        half += ":"
+      end
   end
   
-  def score_wrong
+  def score_wrong(score, answer)
+    score = "." * (answer.length - score.length)
   end
 
 
