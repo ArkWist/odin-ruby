@@ -33,10 +33,22 @@ class RBTree
     node.parent = parent
     node.color = false
     value < parent.value ? parent.child1 = node : parent.child2 = node
+
+    rebalance(node)
+
+    end
+
   end
 
-  def rebalance
-    # Needs to deermine R, L, RL, LR, and recoler
+  def rebalance(node)
+    # Needs to determine R, L, RL, LR, and recolor
+    while node.color == false && !node.parent.nil? && node.parent.color == false
+      unless node.parent.parent.nil?
+        node.parent.color = true
+        node = parent
+      end
+    end
+
   end
 
 end
