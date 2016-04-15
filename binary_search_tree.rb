@@ -1,11 +1,14 @@
 class Node
   attr_accessor :value, :parent, :child1, :child2
-  def initialize(value, parent, color=true) #true = black
+  def initialize(value, parent=nil, color=true) #true = black
     @value = value
     @parent = parent
     @color = color
     @child1 = nil
     @child2 = nil
+  end
+  def has_child?
+    return !child1.nil? || !child.nil?
   end
 end
 
@@ -16,7 +19,30 @@ class RBTree
   end
 
   def add_node(value)
-    #
+    parent = @head
+    node = Node.new(value)
+
+    while parent.has_child?
+      if value < parent.value
+        if parent.child1.nil?
+          node.color = !parent.color
+          node.parent = parent
+          parent.child1 = node
+        else
+          parent = parent.child1
+        end
+      elsif value >= parent.value
+        if parent.child2.nil?
+          node.color = !parent.color
+          node.parent = parent
+          parent.child2 = node
+        else
+          parent = parent.child2
+        end
+      end
+    end
+
+value < parent.value && !parent.child1.nil?
   end
 
 end
@@ -33,7 +59,7 @@ end
 
 
 def build_rb_tree(data) #[3,4,23,8,6345,7,9,1,324,7,4,5,67,9]
-  head = Node.new(data.shift, nil, color)
+  head = Node.new(data.shift)
   tree = RBTree.new(head)
 
   data.each do |value|
