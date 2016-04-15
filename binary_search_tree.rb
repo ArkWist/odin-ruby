@@ -21,28 +21,22 @@ class RBTree
   def add_node(value)
     parent = @head
     node = Node.new(value)
-
     while parent.has_child?
-      if value < parent.value
-        if parent.child1.nil?
-          node.color = !parent.color
-          node.parent = parent
-          parent.child1 = node
-        else
-          parent = parent.child1
-        end
-      elsif value >= parent.value
-        if parent.child2.nil?
-          node.color = !parent.color
-          node.parent = parent
-          parent.child2 = node
-        else
-          parent = parent.child2
-        end
+      if value < parent.value && !parent.child1.nil?
+        parent = parent.child1
+      elsif value >= parent.value && !parent.child2.nil?
+        parent = parent.child2
+      else
+        break
       end
     end
+    node.parent = parent
+    node.color = false
+    value < parent.value ? parent.child1 = node : parent.child2 = node
+  end
 
-value < parent.value && !parent.child1.nil?
+  def rebalance
+    # Needs to deermine R, L, RL, LR, and recoler
   end
 
 end
@@ -64,6 +58,7 @@ def build_rb_tree(data) #[3,4,23,8,6345,7,9,1,324,7,4,5,67,9]
 
   data.each do |value|
     tree.add_node(value)
+    tree.rebalance
   end
   
   # Add nodes in order.
