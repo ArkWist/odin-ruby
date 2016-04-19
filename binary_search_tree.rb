@@ -12,7 +12,7 @@ class Node
   end
 end
 
-class RBTree
+class RBT
   attr_accessor :head
   def initialize(head)
     @head = head
@@ -40,6 +40,73 @@ class RBTree
 
   end
 
+# Red-Black Tree Visualization:
+# https://www.cs.usfca.edu/~galles/visualization/RedBlack.html
+# https://en.wikipedia.org/wiki/Tree_rotation
+
+# RECOLOR when red node's parent's sibling is red
+# RESTRUCTURE when red node's parent's sibling is black or null
+#   RIGHT when added to left
+#   RIGHT-LEFT when added to right on left side
+#   LEFT when added to right
+#   LEFT-RIGHT when added to left on right side
+# Right: swap parent with left child
+# Left: swap parent with right child
+#   is parent right child
+#   current left child becomes parent
+#   parent right child becomes current left child
+# If N's parent is black, do nothing
+# If N's parent is red
+#   If N's parent's sibling is black
+#     If N is left child >> rotate right
+#     If N is right child >> N becomes grandparent
+#     Opposites for opposite side of G I guess.
+
+
+
+
+=begin
+Insert X
+while X != root && P.color == red
+  if P == P.P.left
+    Y = P.P.right  #uncle
+    if Y.color = red
+      then case1
+    elsif X == P.right
+      then case2
+      case3
+    else (case1 with L and R swapped?)
+root.color = black
+
+Page 24:
+http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-046j-introduction-to-algorithms-sma-5503-fall-2005/video-lectures/lecture-10-red-black-trees-rotations-insertions-deletions/lec10.pdf
+
+=end
+
+
+
+=begin
+http://pages.cs.wisc.edu/~paton/readings/Red-Black-Trees/
+
+if P == red
+  if U == black
+    if P == G.left
+      if N == P.left
+        >> G.left = P.right
+        >> P.parent = G.parent  #Were G root, P now root
+        >> G.parent = P
+        >> P.right = G
+      if N == P.right
+        >> P.right = null
+        >> P.parent = N   #Were G root, N now root
+        >> K.left = P
+        >> K.right = G
+        >> G.parent = N
+    if P == G.right
+        #Mirror
+
+
+=end
   def rebalance(node)
     # Needs to determine R, L, RL, LR, and recolor
     while node.color == false && !node.parent.nil? && node.parent.color == false
@@ -66,7 +133,7 @@ end
 
 def build_rb_tree(data) #[3,4,23,8,6345,7,9,1,324,7,4,5,67,9]
   head = Node.new(data.shift)
-  tree = RBTree.new(head)
+  tree = RBT.new(head)
 
   data.each do |value|
     tree.add_node(value)
