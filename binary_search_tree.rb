@@ -45,7 +45,7 @@ class RBT
         break
       end
     end
-    n.parent = parent
+    n.parent = p
     n.set_red
     value < p.value ? p.left = n : p.right = n
     rebalance(n)
@@ -58,17 +58,17 @@ class RBT
 
   def case_1(n)
     p = n.parent
-    if p == null then n.set_black else case_2(n, p) end
+    if p == nil then n.set_black else case_2(n, p) end
   end
 
-  def case_2(n, n)
+  def case_2(n, p)
     if !p.black? then case_3(n, p) end
   end
 
   def case_3(n, p)
     g = p.parent
     if p == g.left then u = g.right else u = g.left end
-    if u == null || u.black?
+    if u == nil || u.black?
       case_4(n, p, g)
     else
       p.set_black
@@ -118,17 +118,17 @@ class RBT
   end
 
   def find_head(n)
-    if n.parent != null then find_head(n.parent) else return n end
+    if n.parent != nil then find_head(n.parent) else return n end
   end
 end
 
 
 def build_tree(data, parent=nil)
   middle = data.length/2
-  node = Node.new(data[middle], parent)
-  node.child1 = build_tree(data[0...middle], node) if data.length > 1
-  node.child2 = build_tree(data[middle..-1], node) if data.length > 2
-  return node
+  n = Node.new(data[middle], parent)
+  n.left = build_tree(data[0...middle], n) if data.length > 1
+  n.right = build_tree(data[middle..-1], n) if data.length > 2
+  return n
 end
 
 
