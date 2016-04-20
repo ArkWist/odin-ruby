@@ -92,19 +92,41 @@ if P == red
   if U == black
     if P == G.left
       if N == P.left
-        >> G.left = P.right
-        >> P.parent = G.parent  #Were G root, P now root
-        >> G.parent = P
         >> P.right = G
+        >> P.parent = G.parent
+        >> G.left = P.right
+        >> G.parent = P
+        >> P.color = black
+        >> G.color = red
       if N == P.right
+        >> N.left = P
+        >> N.right = G
+        >> N.parent = G.parent
         >> P.right = null
-        >> P.parent = N   #Were G root, N now root
-        >> K.left = P
-        >> K.right = G
+        >> P.parent = N
+        >> G.left = null
         >> G.parent = N
+        >> N.color = black
+        >> G.color = red
     if P == G.right
-        #Mirror
-
+      if N = P.left
+        >> N.right = P
+        >> N.left = G
+        >> N.parent = G.parent
+        >> P.left = null
+        >> P.parent = N
+        >> G.right = null
+        >> G.parent = N
+        >> N.color = black
+        >> G.color = red
+      if N = P.right
+        >> P.left = G
+        >> P.parent = G.parent
+        >> G.right = P.left
+        >> G.parent = P
+        >> P.color = black
+        >> G.color = red
+  if U == red
 
 =end
   def rebalance(node)
