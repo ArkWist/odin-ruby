@@ -1,16 +1,16 @@
 class Node
-  attr_accessor :value, :parent, :child1, :child2
+  attr_accessor :value, :parent, :left, :right
 
   def initialize(value, parent=nil, black=true)
     @value = value
     @parent = parent
     @black = black
-    @child1 = nil
-    @child2 = nil
+    @left = nil
+    @right = nil
   end
 
   def has_child?
-    return !child1.nil? || !child.nil?
+    return !left.nil? || !right.nil?
   end
 
   def black?
@@ -34,22 +34,22 @@ class RBT
   end
 
   def add_node(value)
-    parent = @head
-    node = Node.new(value)
-    while parent.has_child?
-      if value < parent.value && !parent.child1.nil?
-        parent = parent.child1
-      elsif value >= parent.value && !parent.child2.nil?
-        parent = parent.child2
+    P = @head
+    N = Node.new(value)
+    while P.has_child?
+      if value < P.value && !P.left.nil?
+        P = P.left
+      elsif value >= P.value && !P.right.nil?
+        P = P.right
       else
         break
       end
     end
-    node.parent = parent
-    node.set_red
-    value < parent.value ? parent.child1 = node : parent.child2 = node
-    rebalance(node)
-    @head = find_head(node)
+    N.parent = parent
+    N.set_red
+    value < P.value ? P.left = N : P.right = N
+    rebalance(N)
+    @head = find_head(N)
   end
 
   def rebalance(N)
