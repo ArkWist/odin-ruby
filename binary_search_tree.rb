@@ -34,91 +34,91 @@ class RBT
   end
 
   def add_node(value)
-    P = @head
-    N = Node.new(value)
-    while P.has_child?
-      if value < P.value && !P.left.nil?
-        P = P.left
-      elsif value >= P.value && !P.right.nil?
-        P = P.right
+    p = @head
+    n = Node.new(value)
+    while p.has_child?
+      if value < p.value && !p.left.nil?
+        p = p.left
+      elsif value >= p.value && !p.right.nil?
+        p = p.right
       else
         break
       end
     end
-    N.parent = parent
-    N.set_red
-    value < P.value ? P.left = N : P.right = N
-    rebalance(N)
-    @head = find_head(N)
+    n.parent = parent
+    n.set_red
+    value < p.value ? p.left = n : p.right = n
+    rebalance(n)
+    @head = find_head(n)
   end
 
-  def rebalance(N)
-    case_1(N)
+  def rebalance(n)
+    case_1(n)
   end
 
-  def case_1(N)
-    P = N.parent
-    if P == null then N.set_black else case_2(N, P) end
+  def case_1(n)
+    p = n.parent
+    if p == null then n.set_black else case_2(n, p) end
   end
 
-  def case_2(N, P)
-    if !P.black? then case_3(N, P) end
+  def case_2(n, n)
+    if !p.black? then case_3(n, p) end
   end
 
-  def case_3(N, P)
-    G = P.parent
-    if P == G.left then U = G.right else U = G.left end
-    if U == null || U.black?
-      case_4(N, P, G)
+  def case_3(n, p)
+    g = p.parent
+    if p == g.left then u = g.right else u = g.left end
+    if u == null || u.black?
+      case_4(n, p, g)
     else
-      P.set_black
-      U.set_black
-      G.set_red
-      case_1(G)
+      p.set_black
+      u.set_black
+      g.set_red
+      case_1(g)
     end
   end
 
-  def case_4(N, P, G)
-    if N == P.right && P == G.left
-      rotate_left(N, P, G)
-      P = N
-      N = N.left
-    elsif N == P.left && P == G.left
-      rotate_right(N, P, G)
-      P = N
-      N = N.right
+  def case_4(n, p, g)
+    if n == p.right && p == g.left
+      rotate_left(n, p, g)
+      p = n
+      n = n.left
+    elsif n == p.left && p == g.left
+      rotate_right(n, p, g)
+      p = n
+      n = n.right
     end
-    case_5(N, P, G)
+    case_5(n, p, g)
   end
 
-  def case_5(N, P, G)
-    P.set_black
-    G.set_red
-    if N == P.left
-      rotate_right(N, P, G)
+  def case_5(n, p, g)
+    p.set_black
+    g.set_red
+    if n == p.left
+      rotate_right(n, p, g)
     else
-      rotate_left(N, P, G)
+      rotate_left(n, p, g)
     end
   end
 
-  def rotate_left(N, P, G)
-    P.right = N.left
-    P.parent = N
-    N.left = P
-    N.parent = G
-    G.left = N
+  def rotate_left(n, p, g)
+    p.right = n.left
+    p.parent = n
+    n.left = p
+    n.parent = g
+    g.left = n
   end
 
-  def rotate_right(N, P, G)
-    P.left = N.right
-    P.parent = N
-    N.right = P
-    N.parent = G
-    G.right = N    
+  def rotate_right(n, p, g)
+    p.left = n.right
+    p.parent = n
+    n.right = p
+    n.parent = g
+    g.right = n   
   end
 
-  def find_head(N)
-    if N.parent != null then find_head(N.parent) else return N end
+  def find_head(n)
+    if n.parent != null then find_head(n.parent) else return n end
   end
 end
 
