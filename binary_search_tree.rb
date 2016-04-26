@@ -138,16 +138,49 @@ def build_rb_tree(data) #[3,4,23,8,6345,7,9,1,324,7,4,5,67,9]
   data.each do |value|
     tree.add_node(value)
   end
+  return tree
 end
 
 
-def breadth_first_search
+def breadth_first_search(tree, find)
   # Returns node with given value
   # Use queue array to keep track of child nodes
+  # Queue keeps track of searches not yet made?
+  # Start with each node having -1 (infinite) distance
+  # Backtrack to root to find distance
+  # This should just be the same tree, put into a queue?
+  ###
+  # Store root
+  # Visit left, store left
+  # Visit right, store right
+  # Set left, visit left, store left
+  # Visit right, store right, hop up
+  ###
+  # Need a number to keep track of current depth to match
+  # Can you add a command to search further?
+  # I don't think that works for breadth first
+  queue = []
+  depth = 0
+  node = tree.root
+  queue = bfs(node, queue, depth)
+  # search tree now
+end
+
+def bfs(node, queue, depth)
+  return queue if !node.has_child?
+  depth += 1
+  if node.left != nil
+    queue << bfs(node.left, queue, depth)
+  end
+  if node.right != nil
+    queue << bfs(node.right, queue, depth)
+  end
+
 end
 
 def depth_first_search
   # Use stack array
+  # Go down all lefts, then up and rights, until finish
 end
 
 def dfs_rec
@@ -161,7 +194,5 @@ tree = build_tree(sorted_data)
 unsorted_data = [3, 4, 23, 8, 6345, 7, 9, 1, 324, 7, 4, 5, 67, 9]
 rbtree = build_rb_tree(unsorted_data)
 
-
-
-
-
+find = 5
+bfs_node = breadth_first_search(rbtree, find)
