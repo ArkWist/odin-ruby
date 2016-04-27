@@ -114,7 +114,7 @@ def build_tree(data, parent=nil)
   return n
 end
 
-def build_rb_tree(data) #[3,4,23,8,6345,7,9,1,324,7,4,5,67,9]
+def build_rb_tree(data)
   head = Node.new(data.shift)
   tree = RBT.new(head)
   data.each do |value|
