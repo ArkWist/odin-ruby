@@ -159,24 +159,32 @@ def breadth_first_search(tree, find)
   # Need a number to keep track of current depth to match
   # Can you add a command to search further?
   # I don't think that works for breadth first
-  queue = []
-  depth = 0
-  node = tree.root
-  queue = bfs(node, queue, depth)
+  #queue = []
+  #depth = 0
+  #node = tree.root
+  #queue = bfs(node, queue, depth)
   # search tree now
+  queue = [tree.head]
+  until queue.empty?
+    current = queue.shift
+    return current if current.value == find
+    queue.push current.left unless current.left.nil?
+    queue.push current.right unless current.right.nil?
+  end
+  nil
 end
 
-def bfs(node, queue, depth)
-  return queue if !node.has_child?
-  depth += 1
-  if node.left != nil
-    queue << bfs(node.left, queue, depth)
-  end
-  if node.right != nil
-    queue << bfs(node.right, queue, depth)
-  end
-
-end
+#def bfs(node, queue, depth)
+#  return queue if !node.has_child?
+#  depth += 1
+#  if node.left != nil
+#    queue << bfs(node.left, queue, depth)
+#  end
+#  if node.right != nil
+#    queue << bfs(node.right, queue, depth)
+#  end
+#
+#end
 
 def depth_first_search
   # Use stack array
@@ -196,3 +204,8 @@ rbtree = build_rb_tree(unsorted_data)
 
 find = 5
 bfs_node = breadth_first_search(rbtree, find)
+puts bfs_node.nil? ? "nil" : bfs_node.value.to_s
+
+find = 6
+bfs_node = breadth_first_search(rbtree, find)
+puts bfs_node.nil? ? "nil" : bfs_node.value.to_s
