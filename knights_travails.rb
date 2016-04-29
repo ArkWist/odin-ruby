@@ -93,7 +93,11 @@ class Move
     positions.push(Position.new(x + 2, y + 1))
     positions = clear_invalid(positions)
      
-
+  end
+  def clear_invalid(positions)
+  
+  end
+end
     
     moves = get_moves
     @next = push(Move.new(self, Position.new(@pos.x - 2, @pos.y - 1))
@@ -103,3 +107,59 @@ class Move
     a, b, moves = @pos.x, @pos.y, []
     moves
 #
+
+
+##############################################################
+
+
+class Position
+  attr_reader :xy
+  def initialize(x=0, y=0)
+    @xy = [x, y]
+  end
+end
+
+
+class Move
+  def initialize(prior=nil, pos)
+    @prior = prior
+    @pos = pos
+  end
+  def next_moves
+    convert_moves(find_valid(next_positions))
+    #positions = next_positions
+    #valid = find_valid(positions)
+    #moves = convert_moves(valid)
+  end
+  def next_positions
+    positions = []
+    x, y = @pos.x, @pos.y
+    positions.push(Position.new(x - 2, y - 1))
+    positions.push(Position.new(x - 2, y + 1))
+    positions.push(Position.new(x - 1, y - 2))
+    positions.push(Position.new(x - 1, y + 2))
+    positions.push(Position.new(x + 1, y - 2))
+    positions.push(Position.new(x + 1, y + 2))
+    positions.push(Position.new(x + 2, y - 1))
+    positions.push(Position.new(x + 2, y + 1))
+  end
+  def find_valid(positions)
+    valid = []
+    positions.each do |pos|
+      valid << pos if pos.xy.each{ |i| i >= 0 && i < 8 }
+    end
+    valid
+  end
+  def convert_moves(positions)
+    valid = []
+    positions.each do |pos|
+      valid << Move.new(self, pos)
+    end
+    valid
+  end
+#
+
+
+#
+knight = Position.new(0, 0)
+target = Position.new(3, 3)
