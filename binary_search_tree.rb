@@ -106,6 +106,8 @@ class RBT
   end
 end
 
+
+
 def build_tree(data, parent=nil)
   middle = data.length/2
   n = Node.new(data[middle], parent)
@@ -122,6 +124,8 @@ def build_rb_tree(data)
   end
   return tree
 end
+
+
 
 # Clever and legible BFS from Donald Dali.
 def breadth_first_search(tree, find)
@@ -146,9 +150,15 @@ def depth_first_search(tree, find)
   nil
 end
 
-def dfs_rec
-  # depth first search that is recursive
+def dfs_rec(node, find)
+  return node if node.value == find
+  left = dfs_rec(node.left, find) unless node.left.nil?
+  right = dfs_rec(node.right, find) unless node.right.nil?
+  return left if !left.nil?
+  return right if !right.nil?
+  return nil
 end
+
 
 
 sorted_data = [1, 3, 4, 4, 5, 7, 7, 8, 9, 9, 23, 67, 324, 6345]
@@ -157,6 +167,10 @@ tree = build_tree(sorted_data)
 unsorted_data = [3, 4, 23, 8, 6345, 7, 9, 1, 324, 7, 4, 5, 67, 9]
 rbtree = build_rb_tree(unsorted_data)
 
+
+
+puts "Breadth-first search:"
+
 find = 5
 bfs_node = breadth_first_search(rbtree, find)
 puts bfs_node.nil? ? "nil" : bfs_node.value.to_s
@@ -165,6 +179,10 @@ find = 6
 bfs_node = breadth_first_search(rbtree, find)
 puts bfs_node.nil? ? "nil" : bfs_node.value.to_s
 
+
+
+puts "Depth-first search:"
+
 find = 5
 dfs_node = depth_first_search(rbtree, find)
 puts dfs_node.nil? ? "nil" : dfs_node.value.to_s
@@ -172,3 +190,16 @@ puts dfs_node.nil? ? "nil" : dfs_node.value.to_s
 find = 6
 dfs_node = depth_first_search(rbtree, find)
 puts dfs_node.nil? ? "nil" : dfs_node.value.to_s
+
+
+
+puts "Depth-first search (recursive):"
+
+find = 5
+dfs_rec_node = dfs_rec(rbtree.head, find)
+puts dfs_rec_node.nil? ? "nil" : dfs_rec_node.value.to_s
+
+find = 6
+dfs_rec_node = dfs_rec(rbtree.head, find)
+puts dfs_rec_node.nil? ? "nil" : dfs_rec_node.value.to_s
+
