@@ -15,9 +15,6 @@ class Move
   end
   def next_moves
     convert_moves(find_valid(next_positions))
-    #positions = next_positions
-    #valid = find_valid(positions)
-    #moves = convert_moves(valid)
   end
   def next_positions
     positions = []
@@ -34,6 +31,7 @@ class Move
   def find_valid(positions)
     valid = []
     positions.each do |pos|
+      # 8x8 board assumed.
       valid << pos if pos.xy.each{ |i| i >= 0 && i < 8 }
     end
     valid
@@ -72,7 +70,7 @@ end
 def get_path(last_move)
   prior = last_move.prior
   moves = [last_move]
-  until prior == nil
+  until prior.nil?
     moves << prior
     prior = moves.last.prior
   end
@@ -91,17 +89,17 @@ end
 
 knight = Position.new(0, 0)
 target = Position.new(1, 2)
-knight_moves(knight, target)  # 1: [0,0] [1,2]
+knight_moves(knight, target)
 
 knight = Position.new(0, 0)
 target = Position.new(3, 3)
-knight_moves(knight, target)  # 2: [0,0] [1,2] [3,3]
+knight_moves(knight, target)
 
 knight = Position.new(3, 3)
 target = Position.new(0, 0)
-knight_moves(knight, target)  # 2: [3,3] [1,2] [0,0]
+knight_moves(knight, target)
 
 knight = Position.new(3, 3)
 target = Position.new(4, 3)
-knight_moves(knight, target)  # 3: [3,3] [4,5] [2,4] [4,3]
+knight_moves(knight, target)
 
