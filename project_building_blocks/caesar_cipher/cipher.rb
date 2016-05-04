@@ -1,40 +1,38 @@
-def caesar_cipher(string, shift_factor)
 
-  new_string = string.each_char.map do |letter|
-    letter = shift_if_range(letter, shift_factor, "a".ord, "z".ord)
-    letter = shift_if_range(letter, shift_factor, "A".ord, "Z".ord)
+def caesar_cipher(text, shift)
+  code = text.each_char.map do |letter|
+    letter = encode(letter, shift)
   end
-
-  new_string
+  code.join
 end
 
-def shift_if_range(letter, shift_factor, range_start, range_end)
-
-  letter_number = letter.ord
-  
-  if letter_number >= range_start && letter_number <= range_end then
-
-    # Sanitize shift_factor so don't need while loop
-    shift_factor = shift_factor.to_i
-    shift_factor = shift_factor % (range_end - range_start)
-    
-    letter_number += shift_factor
-
-    if letter_number > range_end then
-      shift_factor = letter_number - range_end
-      letter_number = range_start + shift_factor
-    end
-
-    letter = letter_number.chr
+def encode(letter, shift)
+  if letter.between?("a", "z")
+    letter = bounded_shift(letter, shift, "a", "z")
+  elsif letter.between?("A", "Z")
+    letter = bounded_shift(letter, shift, "A", "Z")
   end
-
   letter
 end
 
-puts "Enter input string: "
-original_string = gets.chomp
-puts "Enter shift factor: "
-shift_factor = gets.chomp
+def bounded_shift(letter, shift, range_a, range_z)
+  shift = (shift % (range_z.ord - range_a.ord + 1))
+  # ^ Normalize shifts greater than the given range.
+  letter = (letter.ord + shift).chr
+  if letter.ord > range_z.ord
+    shift = letter.ord - range_z.ord - 1
+    letter = (range_a.ord + shift).chr
+  end
+  letter
+end
 
-ciphered_string = caesar_cipher(original_string, shift_factor).join
-puts "Result: " + ciphered_string
+
+
+# Ask for input only when run independently (not through Rspec).
+if __FILE__ == $0
+  print "Enter input string: "
+  original_string = gets.chomp
+  print "Enter shift factor: "
+  shift_factor = gets.chomp
+  puts "Result: #{caesar_cipher(original_string, shift_factor)}"
+end
