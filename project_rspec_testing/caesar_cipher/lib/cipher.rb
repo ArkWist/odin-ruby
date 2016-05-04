@@ -1,3 +1,4 @@
+
 def caesar_cipher(string, shift_factor)
 
   new_string = string.each_char.map do |letter|
@@ -5,7 +6,7 @@ def caesar_cipher(string, shift_factor)
     letter = shift_if_range(letter, shift_factor, "A".ord, "Z".ord)
   end
 
-  new_string
+  new_string.join
 end
 
 def shift_if_range(letter, shift_factor, range_start, range_end)
@@ -31,10 +32,11 @@ def shift_if_range(letter, shift_factor, range_start, range_end)
   letter
 end
 
-puts "Enter input string: "
-original_string = gets.chomp
-puts "Enter shift factor: "
-shift_factor = gets.chomp
-
-ciphered_string = caesar_cipher(original_string, shift_factor).join
-puts "Result: " + ciphered_string
+# Ask for input only when run independently (not through Rspec).
+if __FILE__ == $0
+  print "Enter input string: "
+  original_string = gets.chomp
+  print "Enter shift factor: "
+  shift_factor = gets.chomp
+  puts "Result: #{caesar_cipher(original_string, shift_factor)}"
+end
