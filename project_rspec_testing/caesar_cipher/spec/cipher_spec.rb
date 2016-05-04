@@ -22,6 +22,24 @@ describe "caesar_cipher" do
       expect(caesar_cipher("voxel", 5)).to eq("atcjq")
     end
   end
+  
+  context "given mixed cases" do
+    it "maintains letter case" do
+      expect(caesar_cipher("ForGG", 1)).to eq("GpsHH")
+    end
+  end
+  
+  context "given no shift" do
+    it "doesn't shift" do
+      expect(caesar_cipher("velocity", 0)).to eq("velocity")
+    end
+  end
+  
+  context "given shift over 26" do
+    it "wraps a to z multiple times" do
+      expect(caesar_cipher("ForGG", 27)).to eq("GpsHH")
+    end
+  end
       
       
   

@@ -16,16 +16,20 @@ def encode(letter, shift)
 end
 
 def bounded_shift(letter, shift, range_a, range_z)
-  shift = shift % (range_z.ord - range_a.ord)
+  say = false
+  if shift >= 26
+    say = true
+  end
+  shift = (shift % (range_z.ord - range_a.ord))
+  puts "Changed shift: #{shift.to_i}" if say
   # ^ Handle shifts greater than the given range.
   letter = (letter.ord + shift).chr
   if letter.ord > range_z.ord
     shift = letter.ord - range_z.ord
-    letter = (range_a.ord + shift).chr
+    letter = (range_a.ord + shift - 1).chr
   end
   letter
 end
-
 
 
 # Ask for input only when run independently (not through Rspec).
