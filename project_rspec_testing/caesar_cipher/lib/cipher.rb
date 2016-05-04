@@ -1,13 +1,36 @@
-
 def caesar_cipher(string, shift_factor)
-
-  new_string = string.each_char.map do |letter|
+  code = string.each_char.map do |letter|
     letter = shift_if_range(letter, shift_factor, "a".ord, "z".ord)
     letter = shift_if_range(letter, shift_factor, "A".ord, "Z".ord)
   end
-
-  new_string.join
+  code.join
 end
+
+
+
+def caesar_cipher(text, shift)
+  code = text.each_char.map do |letter|
+    letter = encode(letter, shift)
+  end
+  code.join
+end
+
+def encode(letter, shift)
+  if letter.between?("a", "z")
+    letter = shift_in_range(letter, shift, "a", "z")
+  elsif letter.between?("A", "Z")
+    letter = shift_in_range(letter, shift, "A", "Z")
+  else
+    letter
+  end
+end
+
+def shift_in_range(letter, shift, range_a, range_z)
+# Implement shifting letter only within given range
+
+
+
+
 
 def shift_if_range(letter, shift_factor, range_start, range_end)
 
