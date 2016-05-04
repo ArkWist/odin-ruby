@@ -8,7 +8,7 @@ end
 
 def encode(letter, shift)
   if letter.between?("a", "z")
-    letter = shift_in_range(letter, shift, "a", "z")
+    letter = bounded_shift(letter, shift, "a", "z")
   elsif letter.between?("A", "Z")
     letter = bounded_shift(letter, shift, "A", "Z")
   end
