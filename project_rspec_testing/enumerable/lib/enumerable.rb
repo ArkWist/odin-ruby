@@ -9,7 +9,7 @@ module Enumerable
   def my_each_with_index  # Can I make this piggyback off my_each?
     index = 0
     for element in self
-      yield(element,index)
+      yield(element, index)
       index += index
     end
   end
