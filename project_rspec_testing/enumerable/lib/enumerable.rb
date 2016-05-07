@@ -70,27 +70,25 @@ module Enumerable
   end
 
 
-  def my_inject (injected)
+  #def my_inject (injected)
                 # ; accumulates everything with what it's given
                 # ; but this doesn't match what ToP is asking
                 # ; so I think this takes a default value
                 # ; then that can be used in the block passed to inject
                 # ; which could be any operation
-    my_each { |element| injected = yield(injected, element) }
-    injected
+  #  my_each { |element| injected = yield(injected, element) }
+  #  injected
+  #end
+  
+  
+  def my_inject(memo = self[0])
+    my_each{ |element| memo = yield(memo, element) }
+    memo
   end
+  
   
 end
 
-def multiply_els (array)
-  array.my_inject(1) { |result, element| result * element}
+def multiply_els(array)
+  array.my_inject(1) { |result, element| result * element }
 end
-
-
-@array = [1, 3, 2, 6, 2, 5, 4, 5]
-
-# Test my_each ; can't test because repl.it doesn't like modules
-# @array.my_each { |element| print element}
-
-# print multiply_els(array)
-
