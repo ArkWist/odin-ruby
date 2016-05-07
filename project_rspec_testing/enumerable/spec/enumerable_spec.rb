@@ -1,10 +1,6 @@
 # spec/enumerable_spec.rb
 require "enumerable.rb"
 
-# .my_all?
-# my_any?
-# my_none?
-# my_count
 # my_map
 # my_inject << multiple_els
 # my_map << with proc
@@ -49,13 +45,40 @@ describe Enumerable do
   
   describe ".my_all?" do
     context "passed a boolean block" do
-      it "returns if all elements satisfy the block" do
-        expect(subject.my_select{ |e| e < 2}).to eq(false)
-        expect(subject.my_select{ |e| e < 5}).to eq(true)
+      it "returns if all such elements are found" do
+        expect(subject.my_all?{ |e| e < 2 }).to eq(false)
+        expect(subject.my_all?{ |e| e < 5 }).to eq(true)
       end
     end
   end
-    
+  
+  describe ".my_any?" do
+    context "passed a boolean block" do
+      it "returns if any such element is found" do
+        expect(subject.my_any?{ |e| e == 2 }).to eq(true)
+        expect(subject.my_any?{ |e| e == 3 }).to eq(false)
+      end
+    end
+  end
+  
+  describe ".my_none?" do
+    context "passed a boolean block" do
+      it "returns if no such element is found" do
+        expect(subject.my_none?{ |e| e == 2 }).to eq(false)
+        expect(subject.my_none?{ |e| e == 3 }).to eq(true)
+      end
+    end
+  end
+  
+  describe ".my_count" do
+    context "passed a boolean block" do
+      it "counts all such elements found" do
+        expect(subject.my_count{ |e| e % 2 == 0 }).to eq(2)
+        expect(subject.my_count{ |e| e < 2 }).to eq(1)
+        expect(subject.my_count{ |e| e < 5 }).to eq(3)
+      end
+    end
+  end
 
 end
 
