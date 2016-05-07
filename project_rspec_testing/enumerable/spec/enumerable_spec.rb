@@ -80,6 +80,24 @@ describe Enumerable do
     end
   end
 
+  describe ".my_map" do
+    context "passed a proc" do
+      it "returns an array of tranformed elements" do
+        expect(subject.my_map(Proc.new { |e| e ** 3 })).to eq([1, 8, 64])
+      end
+    end
+    context "passed a block" do
+      it "returns an array of tranformed elements" do
+        expect(subject.my_map{ |e| e ** 4 }).to eq([])
+      end
+    end
+    context "passed a proc and a block" do
+      it "returns an array of tranformed elements" do
+        expect(subject.my_map(Proc.new { |e| e ** 2 }){ |e| e ** 3 }).to eq([1, 64, 4096])
+      end
+    end
+  end
+  
 end
 
 
