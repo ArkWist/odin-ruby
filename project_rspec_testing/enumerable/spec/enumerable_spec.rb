@@ -1,18 +1,6 @@
 # spec/enumerable_spec.rb
 require "enumerable.rb"
 
-# my_map
-# my_inject << multiple_els
-# my_map << with proc
-# my_map << with proc, block, or both, but do block only if both given
-
-#class DummyClass
-#end
-#before(:each) do
-#  @dummy_class = DummyClass.new
-#  @dummy_class.extend(Enumerable)
-#end
-
 describe Enumerable do
   subject { [1, 2, 4] }
 
