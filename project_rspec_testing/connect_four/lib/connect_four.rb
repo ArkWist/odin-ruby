@@ -19,6 +19,11 @@ class ConnectFour
   
   end
 
+  def next_player
+    @player == PLAYERS.first ? @player = PLAYERS.last : @player = PLAYERS.first
+  end
+  
+  
 end
 
 

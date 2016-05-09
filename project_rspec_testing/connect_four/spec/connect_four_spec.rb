@@ -15,23 +15,21 @@ describe "ConnectFour" do
     end
   end
 
-end  
-
-=begin
-  describe "#change_player" do
+  describe ".next_player" do
     it "changes from #{ConnectFour::PLAYERS.first} player to #{ConnectFour::PLAYERS.last} player" do
-      expect(c4.player).to eq(p1)
-      c4.change_player
+      c4.next_player
       expect(c4.player).to eq(p2)
     end
     it "changes from #{ConnectFour::PLAYERS.last} player to #{ConnectFour::PLAYERS.first} player" do
-      c4.change_player
+      c4.next_player
       expect(c4.player).to eq(p2)
-      c4.change_player
+      c4.next_player
       expect(c4.player).to eq(p1)
     end
   end
-=end
+  
+end
+
 
 =begin
 describe ConnectFour, "#game_set" do
