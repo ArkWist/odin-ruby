@@ -19,7 +19,7 @@ end
 
 play_ttt = true
 while play_ttt
-  game = TTTGame.new
+  TTTGame.new
   play_ttt = ask_new_game
 end
 
