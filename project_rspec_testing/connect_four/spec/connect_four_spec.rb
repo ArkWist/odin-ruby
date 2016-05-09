@@ -3,10 +3,10 @@ require "connect_four"
 
 describe "ConnectFour" do
   let(:c4) { ConnectFour.new }
-  let(:p1) { c4.PLAYERS.first }
-  let(:p2) { c4.PLAYERS.last}
+  let(:p1) { ConnectFour::PLAYERS.first }
+  let(:p2) { ConnectFour::PLAYERS.last}
   
-  describe "#new" do
+  describe ".new" do
     it "creates a new game board" do
       expect(c4.board).to be_instance_of(Board)
     end

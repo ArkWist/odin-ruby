@@ -2,7 +2,7 @@
 
 class ConnectFour
   PLAYERS = [:X, :O]
-  attr_reader :board, player
+  attr_reader :board, :player
 
   def initialize
     width, height = 7, 6
@@ -19,4 +19,13 @@ class ConnectFour
   
   end
 
+end
+
+
+
+class Board
+
+  def initialize(width, height)
+    @column = Array.new(width){Array.new(height)}
+  end
 end
