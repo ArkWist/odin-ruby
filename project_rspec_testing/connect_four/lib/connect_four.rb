@@ -28,4 +28,9 @@ class Board
   def initialize(width, height)
     @column = Array.new(width){Array.new(height)}
   end
+  
+  def wipe
+    @column.each { |col| col.each { |row| row = nil } }
+  end
+  
 end
