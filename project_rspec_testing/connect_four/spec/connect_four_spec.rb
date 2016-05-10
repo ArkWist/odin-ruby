@@ -28,6 +28,12 @@ describe "ConnectFour" do
     end
   end
   
+  describe ".move" do
+    it "places player's disc" do
+      #
+    end
+  end
+  
 end
 
 
