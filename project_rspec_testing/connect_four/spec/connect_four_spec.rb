@@ -31,7 +31,7 @@ describe "ConnectFour" do
   
   describe "bd.make_move" do
     it "places a player's disc" do
-      bd.make_move(1)
+      bd.make_move(p1, 1)
       expect(bd.column[1][0]).to eq(p1)
     end
   end

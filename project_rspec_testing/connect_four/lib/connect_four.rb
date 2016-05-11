@@ -46,6 +46,8 @@ end
 
 class Board
 
+  attr_reader :column
+
   def initialize(width, height)
     @column = Array.new(width){Array.new(height)}
   end
