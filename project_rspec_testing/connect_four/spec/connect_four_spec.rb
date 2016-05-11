@@ -30,8 +30,40 @@ describe "ConnectFour" do
   
   describe ".move" do
     it "places player's disc" do
-      #
+      c4.move(1)
+      expect(c4.board.column[1][0]).to eq(p1)
     end
+    it "alternately places discs by player" do
+      c4.move(1)
+      expect(c4.board.column[1][0]).to eq(p1)
+      c4.move(1)
+      expect(c4.board.column[1][1]).to eq(p2)
+    end
+    context "columns is full" do
+      it "rejects the move" do
+        8.times { c4.move(1) }
+        expect(c4.board.column[1].length).to eq(7)
+        expect(c4.player).to eq(p1)
+      end
+    end
+    context "column does not exist" do
+      it "rejects the move" do
+        c4.move(c4.length + 1)
+        expect(c4.[length + 1][0]). to eq(nil)
+        expect(player).to eq(p1)
+      end
+    end
+  end
+
+  describe ".game_set?" do
+    # horizonatal win
+    # vertical win
+    # diagonal win
+    # no win
+    # draw
+  end
+
+  describe ".game_set" do
   end
   
 end
