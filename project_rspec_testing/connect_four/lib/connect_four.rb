@@ -23,6 +23,22 @@ class ConnectFour
     @player == PLAYERS.first ? @player = PLAYERS.last : @player = PLAYERS.first
   end
   
+  def move
+    print "Player #{@player}'s move: "
+    choice = gets.chomp
+    if @board.valid_move?(choice)
+      @board.make_move(@player, choice)
+    else
+      puts "Invalid move. Try again."
+    end
+  end
+ 
+  def game_set?
+  end
+  
+  def game_set
+  end
+  
   
 end
 
@@ -38,4 +54,19 @@ class Board
     @column.each { |col| col.each { |row| row = nil } }
   end
   
+  def make_move(player, choice)
+    @column[choice].push(player)
+  end
+  
+  def valid_move?(choice)
+    choice.is_a? Integer && col_exists?(choice) && !col_full?(choice) ? true : false
+  end
+
+  def col_exists?(choice)
+    choice.between?(0, column.length)
+  end
+  
+  def col_full?(choice)
+    @column[choice].last == nil ? false : true
+  end
 end
