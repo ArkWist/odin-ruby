@@ -92,5 +92,11 @@ class Board
     end
     victory
   end
-
+  
+  def vertical_win?
+  end
+  
+  def diagonal_win?
+  end
+  
 end
