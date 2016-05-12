@@ -38,11 +38,8 @@ class ConnectFour
   
   def game_set
   end
-  
-  
+    
 end
-
-
 
 class Board
 
@@ -63,14 +60,14 @@ class Board
   end
   
   def valid_move?(choice)
-    choice.is_a? Integer && col_exists?(choice) && !col_full?(choice) ? true : false
+    choice.is_a?(Integer) && col_exists?(choice) && !col_full?(choice) ? true : false
   end
 
   def col_exists?(choice)
-    choice.between?(0, column.length)
+    choice.between?(0, @column.length)
   end
   
   def col_full?(choice)
-    @column[choice].length < height ? false : true
+    @column[choice].length < @height ? false : true
   end
 end

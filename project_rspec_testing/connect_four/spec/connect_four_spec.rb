@@ -40,9 +40,31 @@ describe "ConnectFour" do
       expect(bd.column[1][1]).to eq(p2)
     end
   end
-
-end
+  
+  describe "bd.valid_move?" do
+    it "affirms valid moves" do
+      expect(bd.valid_move?(3)).to eq(true)
+    end
+    it "rejects non-Integer moves" do
+      expect(bd.valid_move?(4.3)).to eq(false)
+      expect(bd.valid_move?("connect")).to eq(false)
+    end
+    it "rejects moves that can't be made" do
+      expect(bd.valid_move?(-2)).to eq(false)
+      expect(bd.valid_move?(bd.column.length + 1)).to eq(false)
+    end
+    it "rejects moves made on full columns" do
+      5.times { bd.make_move(p1, 1) }
+      expect(bd.valid_move?(1)).to eq(true)
+      bd.make_move(p1, 1)
+      expect(bd.valid_move?(1)).to eq(false)
+    end
+  end
+  
+  
 =begin
+
+
   describe "bd.valid_move?" do
     it "places player's disc" do
       bd.valid_move?(1)
@@ -91,9 +113,9 @@ end
   
   describe ".play" do
   end
-  
-end
 =end
+end
+
 
 =begin
 describe ConnectFour, "#game_set" do
