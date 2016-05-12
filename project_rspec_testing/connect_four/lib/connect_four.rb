@@ -39,11 +39,7 @@ class ConnectFour
   end
 
   def game_set?
-    victory = false
-    if @board.horizontal_win?
-      victory = true
-    end
-    victory
+    @board.horizontal_win? || @board.vertical_win? || @board.diagonal_win? ? true : false
   end
   
   def game_set
@@ -52,6 +48,9 @@ class ConnectFour
 end
 
 class Board
+
+# Change @column to @columns?
+# In spec, change PLAYER::first etc to local lets?
 
   attr_reader :column
 
