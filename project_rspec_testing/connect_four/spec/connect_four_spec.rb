@@ -62,21 +62,32 @@ describe "ConnectFour" do
   
   describe ".horizontal_win?" do
     it "identifies horizontal wins" do
-      (0..3).times_with_index { |i| c4.move(i) }
-      expect(bd.horizontal_win?(p1, 3)).to eq(true)
-      c4.move(5)
-      expect(bd.horizontal_win?(p1, 5)).to eq(false)
-      cd.move(4)
-      expect(bd.horizontal_win?(p1, 4)).to eq(true)
+      (0..2).times_with_index { |i| c4.move(i) }
+      expect(bd.horizontal_win?).to eq(false)
+      c4.move(3)
+      expect(bd.horizontal_win?).to eq(true)
     end
     it "identifies elevated horiztonal wins" do
-      (1..4).times_with_index { |i| c4.move(i) }
-      expect(bd.horizontal_win?(p1, 4)).to eq(true)
+      (1..3).times_with_index { |i| c4.move(i) }
+      expect(bd.horizontal_win?).to eq(false)
       c4.next_player
-      (1..4).times_with_index { |i| c4.move(i) }
-      expect(bd.horizontal_win?(p2, 4)).to eq(true)
+      c4.move(4)
+      (1..3).times_with_index { |i| c4.move(i) }
+      expect(bd.horizontal_win?).to eq(false)
+      c4.move(4)
+      expect(bd.horizontal_win?).to eq(true)
     end
   end
+  
+  describe ".vertical_win?" do
+    it "identifies vertical wins" do
+      3.times { c4.move(0) }
+      expect(bd.vertical_win?).to eq(false)
+      c4.move(0)
+      expect(bd.vertical_win?).to eq(true)
+    end
+  end
+  
     # horizonatal win
     # vertical win
     # diagonal win
@@ -116,11 +127,7 @@ describe "ConnectFour" do
         #expect(c4.player).to eq(p1)
       end
     end
-
   end
-
-
-
   describe ".game_set" do
   end
   
