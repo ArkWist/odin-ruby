@@ -39,6 +39,11 @@ class ConnectFour
   end
 
   def game_set?
+    victory = false
+    if @board.horizontal_win?
+      victory = true
+    end
+    victory
   end
   
   def game_set
@@ -54,6 +59,7 @@ class Board
     @column = Array.new(width){ Array.new }
     @width = width
     @height = height
+    @last_player, @last_move = nil, nil
   end
   
   def wipe
@@ -62,6 +68,8 @@ class Board
   
   def make_move(player, choice)
     @column[choice].push(player)
+    @last_player = player
+    @last_move = choice
   end
   
   def valid_move?(choice)
@@ -76,34 +84,14 @@ class Board
     @column[choice].length < @height ? false : true
   end
   
-  def horizontal_win?(player, choice)
-    depth = @column[choice].length - 1
-    if horizontal_check(player, choice + 1, depth, 3) || horizontal_check(player, choice - 1, depth, -3)
-      win = true
-    else
-      win = false
+  def horizontal_win?
+    depth = @column[last_move].length - 1
+    consecutive, victory = 0, false
+    @column[0..-1] do |col|
+      col[depth] == last_player ? consecutive += 1 : consecutive = 0
+      victory = true if consecutive == 4
     end
-  end
-  
-  def horizontal_check(player, column, depth, distance)
-    if column.col_ exists? && @column[column][depth] == player
-      matches = true
-    else
-      matches = false
-    end
-    if matches && depth != 0
-      if distance > 0
-        if !horizontal_check(player, column, depth, distance - 1)
-          matches = false
-        end
-      end
-      if distance < 0
-        if !horizontal_check(player, column, depth, distance + 1)
-          matches = false
-        end
-      end
-    end
-    matches
+    victory
   end
 
 end
