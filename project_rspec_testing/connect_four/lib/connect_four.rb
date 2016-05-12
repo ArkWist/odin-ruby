@@ -16,7 +16,12 @@ class ConnectFour
   end
   
   def play
-  
+    first_move = true
+    until game_set?
+      first_move ? first_move == false : next_player
+      move
+    end
+    game_set
   end
 
   def next_player
@@ -32,7 +37,7 @@ class ConnectFour
       puts "Invalid move. Try again."
     end
   end
- 
+
   def game_set?
   end
   
@@ -69,5 +74,9 @@ class Board
   
   def col_full?(choice)
     @column[choice].length < @height ? false : true
+  end
+  
+  def horizontal_win?(player, choice)
+  
   end
 end

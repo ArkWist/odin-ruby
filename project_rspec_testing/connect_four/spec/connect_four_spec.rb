@@ -35,8 +35,7 @@ describe "ConnectFour" do
       expect(bd.column[1][0]).to eq(p1)
     end
     it "stacks multiple discs" do
-      bd.make_move(p1, 1)
-      bd.make_move(p2, 1)
+      bd.make_move(p1, 1); bd.make_move(p2, 1)
       expect(bd.column[1][1]).to eq(p2)
     end
   end
@@ -61,10 +60,23 @@ describe "ConnectFour" do
     end
   end
   
-  
+  describe ".game_set?" do
+    it "identifies horizontal wins" do
+      (0..3).times_with_index { |i| c4.move(i) }
+      expect(bd.horizontal_win?(p1, 3)).to eq(true)
+      c4.move(5)
+      expect(bd.horizontal_win?(p1, 5)).to eq(false)
+      cd.move(4)
+      expect(bd.horizontal_win?(p1, 4)).to eq(true)
+    end
+  end
+    # horizonatal win
+    # vertical win
+    # diagonal win
+    # no win
+    # draw
+
 =begin
-
-
   describe "bd.valid_move?" do
     it "places player's disc" do
       bd.valid_move?(1)
@@ -100,13 +112,7 @@ describe "ConnectFour" do
 
   end
 
-  describe ".game_set?" do
-    # horizonatal win
-    # vertical win
-    # diagonal win
-    # no win
-    # draw
-  end
+
 
   describe ".game_set" do
   end
