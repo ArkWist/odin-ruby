@@ -49,11 +49,13 @@ class Board
   attr_reader :column
 
   def initialize(width, height)
-    @column = Array.new(width){Array.new(height)}
+    @column = Array.new(width){ Array.new }
+    @width = width
+    @height = height
   end
   
   def wipe
-    @column.each { |col| col.each { |row| row = nil } }
+    @column.each { |col| col.each { Array.new } }
   end
   
   def make_move(player, choice)
@@ -69,6 +71,6 @@ class Board
   end
   
   def col_full?(choice)
-    @column[choice].last == nil ? false : true
+    @column[choice].length < height ? false : true
   end
 end
