@@ -1,102 +1,152 @@
-# ConnectFour
+# spec/connect_four_spec.rb
+require "connect_four"
 
-class ConnectFour
-  PLAYERS = [:X, :O]
-  attr_reader :board, :player
-
-  def initialize
-    width, height = 7, 6
-    @board = Board.new(width, height)
-    prepare_game
-  end
+describe "ConnectFour" do
+  let(:c4) { ConnectFour.new }
+  let(:bd) { c4.board }
+  let(:p1) { ConnectFour::PLAYERS.first }
+  let(:p2) { ConnectFour::PLAYERS.last}
   
-  def prepare_game
-    @board.wipe
-    @player = PLAYERS.first
-  end
-  
-  def play
-    first_move = true
-    until game_set?
-      first_move ? first_move == false : next_player
-      move
+  describe "c4.new" do
+    it "creates a new game board" do
+      expect(c4.board).to be_instance_of(Board)
     end
-    game_set
-  end
-
-  def next_player
-    @player == PLAYERS.first ? @player = PLAYERS.last : @player = PLAYERS.first
-  end
-  
-  def move
-    print "Player #{@player}'s move: "
-    choice = gets.chomp
-    if @board.valid_move?(choice)
-      @board.make_move(@player, choice)
-    else
-      puts "Invalid move. Try again."
+    it "sets player to #{p1}" do
+      expect(c4.player).to eq(p1)
     end
   end
 
-  def game_set?
-    @board.horizontal_win? || @board.vertical_win? || @board.diagonal_win? ? true : false
+  describe "c4.next_player" do
+    it "changes from #{p1} player to #{p2} player" do
+      c4.next_player
+      expect(c4.player).to eq(p2)
+    end
+    it "changes from #{p2} player to #{p1} player" do
+      c4.next_player
+      expect(c4.player).to eq(p2)
+      c4.next_player
+      expect(c4.player).to eq(p1)
+    end
   end
   
-  def game_set
+  describe "bd.make_move" do
+    it "places a player's disc" do
+      bd.make_move(p1, 1)
+      expect(bd.column[1][0]).to eq(p1)
+    end
+    it "stacks multiple discs" do
+      bd.make_move(p1, 1); bd.make_move(p2, 1)
+      expect(bd.column[1][1]).to eq(p2)
+    end
   end
-    
+  
+  describe "bd.valid_move?" do
+    it "affirms valid moves" do
+      expect(bd.valid_move?(3)).to eq(true)
+    end
+    it "rejects non-Integer moves" do
+      expect(bd.valid_move?(4.3)).to eq(false)
+      expect(bd.valid_move?("connect")).to eq(false)
+    end
+    it "rejects moves that can't be made" do
+      expect(bd.valid_move?(-2)).to eq(false)
+      expect(bd.valid_move?(bd.column.length + 1)).to eq(false)
+    end
+    it "rejects moves made on full columns" do
+      5.times { bd.make_move(p1, 1) }
+      expect(bd.valid_move?(1)).to eq(true)
+      bd.make_move(p1, 1)
+      expect(bd.valid_move?(1)).to eq(false)
+    end
+  end
+  
+  describe ".horizontal_win?" do
+    it "identifies horizontal wins" do
+      (0..2).times_with_index { |i| c4.move(i) }
+      expect(bd.horizontal_win?).to eq(false)
+      c4.move(3)
+      expect(bd.horizontal_win?).to eq(true)
+    end
+    it "identifies elevated horiztonal wins" do
+      (1..3).times_with_index { |i| c4.move(i) }
+      expect(bd.horizontal_win?).to eq(false)
+      c4.next_player
+      c4.move(4)
+      (1..3).times_with_index { |i| c4.move(i) }
+      expect(bd.horizontal_win?).to eq(false)
+      c4.move(4)
+      expect(bd.horizontal_win?).to eq(true)
+    end
+  end
+  
+  describe ".vertical_win?" do
+    it "identifies vertical wins" do
+      3.times { c4.move(0) }
+      expect(bd.vertical_win?).to eq(false)
+      c4.move(0)
+      expect(bd.vertical_win?).to eq(true)
+    end
+  end
+  
+    # horizonatal win
+    # vertical win
+    # diagonal win
+    # no win
+    # draw
+
+=begin
+  describe "bd.valid_move?" do
+    it "places player's disc" do
+      bd.valid_move?(1)
+      expect(bd.column[1][0]).to eq(p1)
+    end
+    it "alternately places discs by player" do
+      c4.move(1)
+      expect(bd.column[1][0]).to eq(p1)
+      c4.move(1)
+      expect(bd.column[1][1]).to eq(p2)
+    end
+    context "column is not a number" do
+      it "rejects the move" do
+        c4.move("j")
+        expect(bd.column[bd.column.length + 1][0]). to eq(nil)
+        #expect(player).to eq(p1)
+      end
+    end
+    context "column does not exist" do
+      it "rejects the move" do
+        c4.move(bd.column.length + 1)
+        expect(bd.column[bd.column.length + 1][0]). to eq(nil)
+        #expect(player).to eq(p1)
+      end
+    end
+    context "columns is full" do
+      it "rejects the move" do
+        8.times { c4.move(1) }
+        expect(bd.column[1].length).to eq(7)
+        #expect(c4.player).to eq(p1)
+      end
+    end
+  end
+  describe ".game_set" do
+  end
+  
+  describe ".play" do
+  end
+=end
 end
 
-class Board
 
-# Change @column to @columns?
-# In spec, change PLAYER::first etc to local lets?
-
-  attr_reader :column
-
-  def initialize(width, height)
-    @column = Array.new(width){ Array.new }
-    @width = width
-    @height = height
-    @last_player, @last_move = nil, nil
-  end
-  
-  def wipe
-    @column.each { |col| col.each { Array.new } }
-  end
-  
-  def make_move(player, choice)
-    @column[choice].push(player)
-    @last_player = player
-    @last_move = choice
-  end
-  
-  def valid_move?(choice)
-    choice.is_a?(Integer) && col_exists?(choice) && !col_full?(choice) ? true : false
-  end
-
-  def col_exists?(choice)
-    choice.between?(0, @column.length)
-  end
-  
-  def col_full?(choice)
-    @column[choice].length < @height ? false : true
-  end
-  
-  def horizontal_win?
-    depth = @column[last_move].length - 1
-    consecutive, victory = 0, false
-    @column[0..-1] do |col|
-      col[depth] == last_player ? consecutive += 1 : consecutive = 0
-      victory = true if consecutive == 4
-    end
-    victory
-  end
-  
-  def vertical_win?
-  end
-  
-  def diagonal_win?
-  end
-  
-end
+=begin
+describe ConnectFour, "#game_set" do
+  context "with 4 discs in a horizontal row" do
+    it "recogizes player's victory" do
+      4.times { c4.drop_disc(p1, 1)  >> 3.times + 1
+                c4.drop_disc(p2, 2) }
+      expect
+      
+      c4.current_player = current_playercurrent_player = connect_four.drop(1) }
+      
+      
+      end
+=end
