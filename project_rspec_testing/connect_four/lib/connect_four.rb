@@ -77,6 +77,33 @@ class Board
   end
   
   def horizontal_win?(player, choice)
-  
+    depth = @column[choice].length - 1
+    if horizontal_check(player, choice + 1, depth, 3) || horizontal_check(player, choice - 1, depth, -3)
+      win = true
+    else
+      win = false
+    end
   end
+  
+  def horizontal_check(player, column, depth, distance)
+    if column.col_ exists? && @column[column][depth] == player
+      matches = true
+    else
+      matches = false
+    end
+    if matches && depth != 0
+      if distance > 0
+        if !horizontal_check(player, column, depth, distance - 1)
+          matches = false
+        end
+      end
+      if distance < 0
+        if !horizontal_check(player, column, depth, distance + 1)
+          matches = false
+        end
+      end
+    end
+    matches
+  end
+
 end
