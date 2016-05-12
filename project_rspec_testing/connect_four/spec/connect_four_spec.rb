@@ -3,7 +3,7 @@ require "connect_four"
 
 describe "ConnectFour" do
   let(:c4) { ConnectFour.new }
-  let(:bd) { cd.board }
+  let(:bd) { c4.board }
   let(:p1) { ConnectFour::PLAYERS.first }
   let(:p2) { ConnectFour::PLAYERS.last}
   
@@ -32,6 +32,7 @@ describe "ConnectFour" do
   describe "bd.make_move" do
     it "places a player's disc" do
       bd.make_move(p1, 1)
+      puts "Check: #{bd.column[1][0].to_s}"
       expect(bd.column[1][0]).to eq(p1)
     end
   end
