@@ -61,29 +61,36 @@ describe "ConnectFour" do
   end
   
   describe ".horizontal_win?" do
-    it "identifies horizontal wins" do
-      (0..2).each { |i| c4.move(i) }
+    it "identifies horizontal wins for #{ConnectFour::PLAYERS.first}" do
+      (0..2).each { |i| bd.make_move(p1, i) }
       expect(bd.horizontal_win?).to eq(false)
-      c4.move(3)
+      bd.make_move(p1, 3)
+      expect(bd.horizontal_win?).to eq(true)
+    end
+    it "identifies horizontal wins for #{ConnectFour::PLAYERS.last}" do
+      c4.next_player
+      (0..2).each { |i| bd.make_move(p2, i) }
+      expect(bd.horizontal_win?).to eq(false)
+      bd.make_move(p2, 3)
       expect(bd.horizontal_win?).to eq(true)
     end
     it "identifies elevated horiztonal wins" do
-      (1..3).each { |i| c4.move(i) }
+      (1..3).each { |i| bd.make_move(p1, i) }
       expect(bd.horizontal_win?).to eq(false)
       c4.next_player
-      c4.move(4)
-      (1..3).each { |i| c4.move(i) }
+      bd.make_move(p1, 4)
+      (1..3).each { |i| bd.make_move(p1, i) }
       expect(bd.horizontal_win?).to eq(false)
-      c4.move(4)
+      bd.make_move(p1, 4)
       expect(bd.horizontal_win?).to eq(true)
     end
   end
   
   describe ".vertical_win?" do
     it "identifies vertical wins" do
-      3.times { c4.move(0) }
+      3.times { bd.make_move(p1, 0) }
       expect(bd.vertical_win?).to eq(false)
-      c4.move(0)
+      bd.make_move(p1, 0)
       expect(bd.vertical_win?).to eq(true)
     end
   end
