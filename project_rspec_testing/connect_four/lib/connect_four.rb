@@ -122,8 +122,16 @@ class Board
     consecutive, victory = 0, false
     position, depth = @last_move, @column[@last_move].length - 1
     until position == 0 || depth == height
-## Left off here
+      position -= 1
+      depth += 1
     end
+    until position == @width || depth == -1
+      @column[position][depth] == @last_player ? consecutive += 1 : consecutive = 0
+      victory = true if consecutive == 4
+      position += 1
+      depth -= 1
+    end
+    victory
   end
   
 end
