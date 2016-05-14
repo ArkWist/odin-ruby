@@ -11,7 +11,7 @@ describe "ConnectFour" do
     it "creates a new game board" do
       expect(c4.board).to be_instance_of(Board)
     end
-    it "sets player to #{p1}" do
+    it "sets player to #{ConnectFour::PLAYERS.first}" do
       expect(c4.player).to eq(p1)
     end
   end
@@ -62,17 +62,17 @@ describe "ConnectFour" do
   
   describe ".horizontal_win?" do
     it "identifies horizontal wins" do
-      (0..2).times_with_index { |i| c4.move(i) }
+      (0..2).each { |i| c4.move(i) }
       expect(bd.horizontal_win?).to eq(false)
       c4.move(3)
       expect(bd.horizontal_win?).to eq(true)
     end
     it "identifies elevated horiztonal wins" do
-      (1..3).times_with_index { |i| c4.move(i) }
+      (1..3).each { |i| c4.move(i) }
       expect(bd.horizontal_win?).to eq(false)
       c4.next_player
       c4.move(4)
-      (1..3).times_with_index { |i| c4.move(i) }
+      (1..3).each { |i| c4.move(i) }
       expect(bd.horizontal_win?).to eq(false)
       c4.move(4)
       expect(bd.horizontal_win?).to eq(true)
