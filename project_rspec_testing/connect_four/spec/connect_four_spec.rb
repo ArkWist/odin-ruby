@@ -17,11 +17,11 @@ describe "ConnectFour" do
   end
 
   describe "c4.next_player" do
-    it "changes from #{p1} player to #{p2} player" do
+    it "changes from #{ConnectFour::PLAYERS.first} player to #{ConnectFour::PLAYERS.last} player" do
       c4.next_player
       expect(c4.player).to eq(p2)
     end
-    it "changes from #{p2} player to #{p1} player" do
+    it "changes from #{ConnectFour::PLAYERS.last} player to #{ConnectFour::PLAYERS.first} player" do
       c4.next_player
       expect(c4.player).to eq(p2)
       c4.next_player
