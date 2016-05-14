@@ -86,7 +86,7 @@ class Board
   def horizontal_win?
     depth = @column[last_move].length - 1
     consecutive, victory = 0, false
-    @column[0..-1] do |col|
+    @column[0..-1].each do |col|
       col[depth] == last_player ? consecutive += 1 : consecutive = 0
       victory = true if consecutive == 4
     end
@@ -95,7 +95,7 @@ class Board
   
   def vertical_win?
     @consecutive, victory = 0, false
-    @column[@last_move][0..-1] do |row|
+    @column[@last_move][0..-1].each do |row|
       row == last_player ? consecutive += 1 : consecutive = 0
       victory = true if consecutive == 4
     end
