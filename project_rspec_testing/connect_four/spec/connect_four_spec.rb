@@ -32,11 +32,11 @@ describe "ConnectFour" do
   describe "bd.make_move" do
     it "places a player's disc" do
       bd.make_move(p1, 1)
-      expect(bd.column[1][0]).to eq(p1)
+      expect(bd.columns[1][0]).to eq(p1)
     end
     it "stacks multiple discs" do
       bd.make_move(p1, 1); bd.make_move(p2, 1)
-      expect(bd.column[1][1]).to eq(p2)
+      expect(bd.columns[1][1]).to eq(p2)
     end
   end
   
@@ -50,7 +50,7 @@ describe "ConnectFour" do
     end
     it "rejects moves that can't be made" do
       expect(bd.valid_move?(-2)).to eq(false)
-      expect(bd.valid_move?(bd.column.length + 1)).to eq(false)
+      expect(bd.valid_move?(bd.columns.length + 1)).to eq(false)
     end
     it "rejects moves made on full columns" do
       5.times { bd.make_move(p1, 1) }
@@ -133,32 +133,32 @@ describe "ConnectFour" do
   describe "bd.valid_move?" do
     it "places player's disc" do
       bd.valid_move?(1)
-      expect(bd.column[1][0]).to eq(p1)
+      expect(bd.columns[1][0]).to eq(p1)
     end
     it "alternately places discs by player" do
       c4.move(1)
-      expect(bd.column[1][0]).to eq(p1)
+      expect(bd.columns[1][0]).to eq(p1)
       c4.move(1)
-      expect(bd.column[1][1]).to eq(p2)
+      expect(bd.columns[1][1]).to eq(p2)
     end
     context "column is not a number" do
       it "rejects the move" do
         c4.move("j")
-        expect(bd.column[bd.column.length + 1][0]). to eq(nil)
+        expect(bd.columns[bd.columns.length + 1][0]). to eq(nil)
         #expect(player).to eq(p1)
       end
     end
     context "column does not exist" do
       it "rejects the move" do
-        c4.move(bd.column.length + 1)
-        expect(bd.column[bd.column.length + 1][0]). to eq(nil)
+        c4.move(bd.columns.length + 1)
+        expect(bd.columns[bd.columns.length + 1][0]). to eq(nil)
         #expect(player).to eq(p1)
       end
     end
     context "columns is full" do
       it "rejects the move" do
         8.times { c4.move(1) }
-        expect(bd.column[1].length).to eq(7)
+        expect(bd.columns[1].length).to eq(7)
         #expect(c4.player).to eq(p1)
       end
     end
