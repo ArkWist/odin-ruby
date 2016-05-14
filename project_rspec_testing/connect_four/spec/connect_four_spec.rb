@@ -88,6 +88,7 @@ describe "ConnectFour" do
   
   describe ".vertical_win?" do
     it "identifies vertical wins" do
+      bd.make_move(p2, 0)
       3.times { bd.make_move(p1, 0) }
       expect(bd.vertical_win?).to eq(false)
       bd.make_move(p1, 0)
@@ -95,8 +96,20 @@ describe "ConnectFour" do
     end
   end
   
-    # horizonatal win
-    # vertical win
+  describe ".diagonal_win?" do
+    it "identifies north-east directional wins" do
+      bd.make_move(p1, 0)
+      bd.make_move(p2, 1)
+      bd.make_move(p1, 1)
+      2.times { bd.make_move(p2, 2) }
+      bd.make_move(p1, 2)
+      3.times { bd.make_move(p2, 3) }
+      bd.make_move(p1, 3)
+      expect(bd.diagonal_win?).to eq(true)
+    end
+  end
+  
+  
     # diagonal win
     # no win
     # draw
