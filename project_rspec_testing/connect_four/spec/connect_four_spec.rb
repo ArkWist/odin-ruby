@@ -103,9 +103,24 @@ describe "ConnectFour" do
       bd.make_move(p1, 1)
       2.times { bd.make_move(p2, 2) }
       bd.make_move(p1, 2)
+      expect(bd.ne_diagonal_win?).to eq(false)
       3.times { bd.make_move(p2, 3) }
       bd.make_move(p1, 3)
       expect(bd.ne_diagonal_win?).to eq(true)
+    end
+  end
+  
+  describe ".se_diagonal_win?" do
+    it "identifies south-east directional wins" do
+      3.times { bd.make_move(p2, 0) }
+      bd.make_move(p1, 0)
+      2.times { bd.make_move(p2, 1) }
+      bd.make_move(p1, 1)
+      bd.make_move(p2, 2)
+      bd.make_move(p1, 2)
+      expect(bd.se_diagonal_win?).to eq(false)
+      bd.make_move(p1, 3)
+      expect(bd.se_diagonal_win?).to eq(true)
     end
   end
   
