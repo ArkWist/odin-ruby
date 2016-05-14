@@ -96,7 +96,7 @@ describe "ConnectFour" do
     end
   end
   
-  describe ".diagonal_win?" do
+  describe ".ne_diagonal_win?" do
     it "identifies north-east directional wins" do
       bd.make_move(p1, 0)
       bd.make_move(p2, 1)

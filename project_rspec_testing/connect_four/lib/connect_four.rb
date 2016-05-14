@@ -76,7 +76,7 @@ class Board
   end
 
   def col_exists?(choice)
-    choice.between?(0, @column.length)
+    choice.between?(0, @width)
   end
   
   def col_full?(choice)
@@ -84,8 +84,8 @@ class Board
   end
   
   def horizontal_win?
-    depth = @column[@last_move].length - 1
     consecutive, victory = 0, false
+    depth = @column[@last_move].length - 1
     @column[0..-1].each do |col|
       col[depth] == @last_player ? consecutive += 1 : consecutive = 0
       victory = true if consecutive == 4
@@ -102,7 +102,23 @@ class Board
     victory
   end
   
-  def diagonal_win?
+  def ne_diagonal_win?
+    consecutive, victory = 0, false
+    position, depth = @last_move, @column[@last_move].length - 1
+    until position == 0 || depth == 0
+      position -= 1
+      depth -= 1
+    end
+    until position == @width || depth == @height
+      @column[position][depth] == @last_player ? consecutive += 1 : consecutive = 0
+      victory = true if consecutive == 4
+      position += 1
+      depth += 1
+    end
+    victory
+  end
+  
+  def se_diagonal_win?
   end
   
 end
