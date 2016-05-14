@@ -94,6 +94,12 @@ class Board
   end
   
   def vertical_win?
+    @consecutive, victory = 0, false
+    @column[@last_move][0..-1] do |row|
+      row == last_player ? consecutive += 1 : consecutive = 0
+      victory = true if consecutive == 4
+    end
+    victory
   end
   
   def diagonal_win?
