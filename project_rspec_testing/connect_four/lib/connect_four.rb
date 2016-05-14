@@ -121,7 +121,7 @@ class Board
   def se_diagonal_win?
     consecutive, victory = 0, false
     position, depth = @last_move, @column[@last_move].length - 1
-    until position == 0 || depth == height
+    until position == 0 || depth == @height
       position -= 1
       depth += 1
     end
