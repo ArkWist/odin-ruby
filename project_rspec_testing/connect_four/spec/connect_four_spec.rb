@@ -105,7 +105,7 @@ describe "ConnectFour" do
       bd.make_move(p1, 2)
       3.times { bd.make_move(p2, 3) }
       bd.make_move(p1, 3)
-      expect(bd.diagonal_win?).to eq(true)
+      expect(bd.ne_diagonal_win?).to eq(true)
     end
   end
   
