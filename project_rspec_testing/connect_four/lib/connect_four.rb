@@ -106,6 +106,12 @@ class Board
     separator
   end
   
+  def ascii_cells(row)
+    cells = "|"
+    @columns.each { |col| cells << " #{col[row]} |" }
+    cells
+  end
+  
   
   
   def make_move(player, choice)
