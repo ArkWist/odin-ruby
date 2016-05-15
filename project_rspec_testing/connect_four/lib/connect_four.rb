@@ -7,10 +7,10 @@ class ConnectFour
   def initialize
     width, height = 7, 6
     @board = Board.new(width, height)
-    prepare_game
+    setup_game
   end
   
-  def prepare_game
+  def setup_game
     @board.wipe
     @player = PLAYERS.first
   end
@@ -22,8 +22,11 @@ class ConnectFour
       move
     end
     game_set
+    replay if replay?
   end
 
+  
+  
   def next_player
     @player == PLAYERS.first ? @player = PLAYERS.last : @player = PLAYERS.first
   end
@@ -38,14 +41,29 @@ class ConnectFour
     end
   end
 
+  
+  
   def game_set?
     @board.victory?
   end
   
   def game_set
+    #
+  end
+  
+  
+  
+  def replay?
+    #
+  end
+  
+  def replay
+    #
   end
     
 end
+
+
 
 class Board
   attr_reader :columns
@@ -57,9 +75,17 @@ class Board
     @last_player, @last_move = nil, nil
   end
   
+  
+  
   def wipe
     @columns.each { |col| col.each { Array.new } }
   end
+  
+  def display
+    #
+  end
+  
+  
   
   def make_move(player, choice)
     @columns[choice].push(player)
@@ -78,6 +104,8 @@ class Board
   def col_full?(choice)
     @columns[choice].length < @height ? false : true
   end
+  
+  
   
   def victory?
     horizontal_win? || vertical_win? || ne_diagonal_win? || se_diagonal_win?

@@ -126,7 +126,11 @@ describe "ConnectFour" do
     end
   end
   
-  describe ".print_board" do
+  
+  
+  
+  
+  describe ".display" do
     context "Game board is empty" do
       it "Prints the empty game board" do
         #expect
