@@ -48,17 +48,24 @@ class ConnectFour
   end
   
   def game_set
-    #
+    puts "\nPlayer #{@board.last_player} is victorious.\n"
   end
   
   
   
   def replay?
-    #
+    until valid_boolean?
+      print "Replay? (y/n): "
+      
+    end
   end
   
   def replay
     #
+  end
+  
+  def valid_assertion?(assertion)
+    assertion.downcase == 'y' || assertion.downcase == 'n'
   end
     
 end
@@ -66,7 +73,7 @@ end
 
 
 class Board
-  attr_reader :columns
+  attr_reader :columns, :last_player
 
   def initialize(width, height)
     @columns = Array.new(width){ Array.new }
@@ -94,7 +101,7 @@ class Board
   end
   
   def valid_move?(choice)
-    choice.is_a?(Integer) && col_exists?(choice) && !col_full?(choice) ? true : false
+    choice.is_a?(Integer) && col_exists?(choice) && !col_full?(choice)
   end
 
   def col_exists?(choice)
@@ -102,7 +109,7 @@ class Board
   end
   
   def col_full?(choice)
-    @columns[choice].length < @height ? false : true
+    @columns[choice].length >= @height
   end
   
   
