@@ -141,6 +141,14 @@ describe "ConnectFour" do
   
   
   
+  describe "Board.ascii_separator" do
+    it "draws a column length ' --- --- --- ... ' pattern separator" do
+      expect(bd.ascii_separator).to eq(" --- --- --- --- --- --- --- ")
+    end
+  end
+  
+  
+  
   describe "Board.display" do
     context "game board is empty" do
       it "prints the empty game board" do

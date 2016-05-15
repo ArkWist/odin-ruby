@@ -85,23 +85,24 @@ class Board
     @height = height
     @last_player, @last_move = nil, nil
   end
-  
-  
-  
+
   def wipe
     @columns.each { |col| col.each { Array.new } }
   end
   
+  
+  
   def display
-    #
-    
-#
-#|   |   |   |
-# --- --- ---
-#|   |   |   |
-    
-    
-    
+    print ascii_separator
+    @height.times do |i|
+      draw_cell(i)
+      draw_separator
+    end
+  end
+  
+  def ascii_separator
+    string =  (@width.times { "---" }).join(" ")
+    string.center(string.length + 1)
   end
   
   
@@ -180,5 +181,6 @@ class Board
     end
     victory
   end
+  
   
 end
