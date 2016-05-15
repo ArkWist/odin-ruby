@@ -83,11 +83,11 @@ class Board
     @columns = Array.new(width){ Array.new }
     @width = width
     @height = height
-    @last_player, @last_move = nil, nil
+    @last_player, @last_move = nil, " "
   end
 
   def wipe
-    @columns.each { |col| col.each { Array.new } }
+    @columns.each { |col| col.each { |row| row = " " } }
   end
   
   
@@ -115,7 +115,8 @@ class Board
   
   
   def make_move(player, choice)
-    @columns[choice].push(player)
+    row = find_open_row(choice)
+    @columns[choice][row] = player
     @last_player = player
     @last_move = choice
   end
@@ -130,6 +131,10 @@ class Board
   
   def col_full?(choice)
     @columns[choice].length >= @height
+  end
+  
+  def find_open_row(choice)
+    @columns[choice].find(" ")
   end
   
   

@@ -31,6 +31,17 @@ describe "ConnectFour" do
     end
   end
   
+  describe "Board.find_open_row" do
+    it "finds the first row in a blank column" do
+      expect(bc.find_open_row(3)).to eq(0)
+    end
+    it "finds the first open row in a column" do
+      bd.make_move(p1, 3)
+      bd.make_move(p1, 3)
+      expect(bc.find_open_row(3)).to eq(2)
+    end
+  end
+  
   describe "Board.make_move" do
     it "places a player's disc" do
       bd.make_move(p1, 1)
