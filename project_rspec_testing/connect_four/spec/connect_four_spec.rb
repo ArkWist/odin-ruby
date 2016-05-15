@@ -60,6 +60,8 @@ describe "ConnectFour" do
     end
   end
   
+  # Victory Checks
+  
   describe ".horizontal_win?" do
     it "identifies horizontal wins for #{ConnectFour::PLAYERS.first}" do
       (0..2).each { |i| bd.make_move(p1, i) }
@@ -124,64 +126,14 @@ describe "ConnectFour" do
     end
   end
   
+  describe ".print_board" do
+    context "Game board is empty" do
+      it "Prints the empty game board" do
+        #expect
+      end
+    end
+  end
   
-    # diagonal win
-    # no win
-    # draw
 
-=begin
-  describe "bd.valid_move?" do
-    it "places player's disc" do
-      bd.valid_move?(1)
-      expect(bd.columns[1][0]).to eq(p1)
-    end
-    it "alternately places discs by player" do
-      c4.move(1)
-      expect(bd.columns[1][0]).to eq(p1)
-      c4.move(1)
-      expect(bd.columns[1][1]).to eq(p2)
-    end
-    context "column is not a number" do
-      it "rejects the move" do
-        c4.move("j")
-        expect(bd.columns[bd.columns.length + 1][0]). to eq(nil)
-        #expect(player).to eq(p1)
-      end
-    end
-    context "column does not exist" do
-      it "rejects the move" do
-        c4.move(bd.columns.length + 1)
-        expect(bd.columns[bd.columns.length + 1][0]). to eq(nil)
-        #expect(player).to eq(p1)
-      end
-    end
-    context "columns is full" do
-      it "rejects the move" do
-        8.times { c4.move(1) }
-        expect(bd.columns[1].length).to eq(7)
-        #expect(c4.player).to eq(p1)
-      end
-    end
-  end
-  describe ".game_set" do
-  end
-  
-  describe ".play" do
-  end
-=end
 end
 
-
-=begin
-describe ConnectFour, "#game_set" do
-  context "with 4 discs in a horizontal row" do
-    it "recogizes player's victory" do
-      4.times { c4.drop_disc(p1, 1)  >> 3.times + 1
-                c4.drop_disc(p2, 2) }
-      expect
-      
-      c4.current_player = current_playercurrent_player = connect_four.drop(1) }
-      
-      
-      end
-=end

@@ -48,10 +48,6 @@ class ConnectFour
 end
 
 class Board
-
-# Change @columns to @columnss?
-# In spec, change PLAYER::first etc to local lets?
-
   attr_reader :columns
 
   def initialize(width, height)
