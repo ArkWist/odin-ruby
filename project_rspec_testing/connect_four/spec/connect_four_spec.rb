@@ -147,7 +147,16 @@ describe "ConnectFour" do
     end
   end
   
-  
+  describe "Board.ascii_cells" do
+    it "draws an empty row of cells" do
+      expect(bd.ascii_cells).to eq("|   |   |   |   |   |   |   |")
+    end
+    it "draws cells with discs" do
+      bd.make_move(p1, 1)
+      bd.make_move(p2, 4)
+      expect(bd.ascii_cells).to eq("|   | #{p1} |   |   | #{p2} |   |   |")
+    end
+  end
   
   describe "Board.display" do
     context "game board is empty" do

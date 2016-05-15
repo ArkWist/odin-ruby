@@ -94,7 +94,7 @@ class Board
   
   def display
     print ascii_separator
-    @height.times do |i|
+    (@height - 1).downto(0) do |i|
       draw_cell(i)
       draw_separator
     end
