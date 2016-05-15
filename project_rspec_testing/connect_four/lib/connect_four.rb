@@ -7,7 +7,7 @@ class ConnectFour
   def initialize
     width, height = 7, 6
     @board = Board.new(width, height)
-    setup_game
+    setup_game; play
   end
   
   def setup_game
@@ -54,18 +54,22 @@ class ConnectFour
   
   
   def replay?
-    until valid_boolean?
-      print "Replay? (y/n): "
-      
+    print "Replay? (y/n): "
+    assertion = gets.chomp.downcase
+    if valid_assertion?(assertion)
+      assertion == 'y' ? again = true : again = false
+    else
+      again = replay?
     end
+    again
   end
   
   def replay
-    #
+    setup_game; play
   end
   
   def valid_assertion?(assertion)
-    assertion.downcase == 'y' || assertion.downcase == 'n'
+    assertion == 'y' || assertion == 'n'
   end
     
 end
