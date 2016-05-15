@@ -101,8 +101,9 @@ class Board
   end
   
   def ascii_separator
-    string =  (@width.times { "---" }).join(" ")
-    string.center(string.length + 1)
+    separator = " "
+    @width.times{ separator << "--- " }
+    separator
   end
   
   
