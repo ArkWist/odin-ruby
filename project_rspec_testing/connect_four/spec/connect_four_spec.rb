@@ -1,13 +1,15 @@
 # spec/connect_four_spec.rb
 require "connect_four"
 
+require "stringio"
+
 describe "ConnectFour" do
   let(:c4) { ConnectFour.new }
   let(:bd) { c4.board }
   let(:p1) { ConnectFour::PLAYERS.first }
   let(:p2) { ConnectFour::PLAYERS.last}
   
-  describe "c4.new" do
+  describe "ConnectFour.new" do
     it "creates a new game board" do
       expect(c4.board).to be_instance_of(Board)
     end
@@ -16,7 +18,7 @@ describe "ConnectFour" do
     end
   end
 
-  describe "c4.next_player" do
+  describe "ConnectFour.next_player" do
     it "changes from #{ConnectFour::PLAYERS.first} player to #{ConnectFour::PLAYERS.last} player" do
       c4.next_player
       expect(c4.player).to eq(p2)
@@ -29,7 +31,7 @@ describe "ConnectFour" do
     end
   end
   
-  describe "bd.make_move" do
+  describe "Board.make_move" do
     it "places a player's disc" do
       bd.make_move(p1, 1)
       expect(bd.columns[1][0]).to eq(p1)
@@ -40,7 +42,7 @@ describe "ConnectFour" do
     end
   end
   
-  describe "bd.valid_move?" do
+  describe "Board.valid_move?" do
     it "affirms valid moves" do
       expect(bd.valid_move?(3)).to eq(true)
     end
@@ -62,7 +64,7 @@ describe "ConnectFour" do
   
   # Victory Checks
   
-  describe ".horizontal_win?" do
+  describe "Board.horizontal_win?" do
     it "identifies horizontal wins for #{ConnectFour::PLAYERS.first}" do
       (0..2).each { |i| bd.make_move(p1, i) }
       expect(bd.horizontal_win?).to eq(false)
@@ -88,7 +90,7 @@ describe "ConnectFour" do
     end
   end
   
-  describe ".vertical_win?" do
+  describe "Board.vertical_win?" do
     it "identifies vertical wins" do
       bd.make_move(p2, 0)
       3.times { bd.make_move(p1, 0) }
@@ -98,7 +100,7 @@ describe "ConnectFour" do
     end
   end
   
-  describe ".ne_diagonal_win?" do
+  describe "Board.ne_diagonal_win?" do
     it "identifies north-east directional wins" do
       bd.make_move(p1, 0)
       bd.make_move(p2, 1)
@@ -112,7 +114,7 @@ describe "ConnectFour" do
     end
   end
   
-  describe ".se_diagonal_win?" do
+  describe "Board.se_diagonal_win?" do
     it "identifies south-east directional wins" do
       3.times { bd.make_move(p2, 0) }
       bd.make_move(p1, 0)
@@ -127,12 +129,21 @@ describe "ConnectFour" do
   end
   
   
+
+# This doesn't work. Stub is deprecated and I've not yet found an equivalent.
+#  describe "ConnectFour.replay?" do
+#    it "confirms the players want to play again" do
+#      assertion = nil
+#      assertion.stub(:gets) { "y" }
+#      expect subject.replay? == true
+#    end
+#  end
   
   
   
-  describe ".display" do
-    context "Game board is empty" do
-      it "Prints the empty game board" do
+  describe "Board.display" do
+    context "game board is empty" do
+      it "prints the empty game board" do
         #expect
       end
     end
