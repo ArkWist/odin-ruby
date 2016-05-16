@@ -1,7 +1,8 @@
 # spec/connect_four_spec.rb
+
 require "connect_four"
 
-require "stringio"
+
 
 describe "ConnectFour" do
   let(:c4) { ConnectFour.new }
@@ -152,9 +153,6 @@ describe "ConnectFour" do
   
   
   
-  # ACTUALLY
-  # This ought to show columns numbers at the bottom, too
-
   describe "Board.ascii_separator" do
     it "draws a column length ' --- --- --- ... ' pattern separator" do
       expect(bd.ascii_separator).to eq(" --- --- --- --- --- --- --- ")
@@ -178,13 +176,4 @@ describe "ConnectFour" do
     end
   end
   
-  describe "Board.display" do
-    context "game board is empty" do
-      it "prints the empty game board" do
-        #expect
-      end
-    end
-  end
-  
-
 end
