@@ -152,6 +152,9 @@ describe "ConnectFour" do
   
   
   
+  # ACTUALLY
+  # This ought to show columns numbers at the bottom, too
+
   describe "Board.ascii_separator" do
     it "draws a column length ' --- --- --- ... ' pattern separator" do
       expect(bd.ascii_separator).to eq(" --- --- --- --- --- --- --- ")
@@ -165,7 +168,13 @@ describe "ConnectFour" do
     it "draws cells with discs" do
       bd.make_move(p1, 1)
       bd.make_move(p2, 4)
-      expect(bd.ascii_cells).to eq("|   | #{p1} |   |   | #{p2} |   |   |")
+      expect(bd.ascii_cells(0)).to eq("|   | #{p1} |   |   | #{p2} |   |   |")
+    end
+  end
+
+  describe "Board.ascii_labels" do
+    it "draws column numbers" do
+      expect(bd.ascii_labels).to eq("  0   1   2   3   4   5   6  ")
     end
   end
   
@@ -179,4 +188,3 @@ describe "ConnectFour" do
   
 
 end
-
