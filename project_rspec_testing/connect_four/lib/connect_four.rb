@@ -102,7 +102,7 @@ class Board
   
   def ascii_separator
     separator = " "
-    @width.times{ separator << "--- " }
+    @width.times{ separator << "--- " }   # Would separator<<@width.times{"---"} work?
     separator
   end
   
@@ -110,6 +110,12 @@ class Board
     cells = "|"
     @columns.each { |col| cells << " #{col[row]} |" }
     cells
+  end
+
+  def ascii_labels
+    labels = "  "
+    @width.times { |i| labels << " #{i}  " }
+    labels
   end
   
   
