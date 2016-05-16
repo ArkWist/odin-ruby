@@ -83,11 +83,11 @@ class Board
     @columns = Array.new(width){ Array.new }
     @width = width
     @height = height
-    @last_player, @last_move = nil, " "
+    @last_player, @last_move = nil, nil
   end
 
   def wipe
-    @columns.each { |col| col.each { |row| row = " " } }
+    @columns.each { |col| col.each { Array.new } }
   end
   
   
@@ -109,12 +109,14 @@ class Board
   
   def ascii_cells(row)
     cells = "|"
-    @columns.each { |col| cells << " #{col[row]} |" }
+    @columns.each do |col|
+      col[row] ? cells << " #{col[row]} |" : cells << "   |"
+    end
     cells
   end
 
   def ascii_labels
-    labels = "  "
+    labels = " "
     @width.times { |i| labels << " #{i}  " }
     labels
   end
@@ -122,8 +124,7 @@ class Board
   
   
   def make_move(player, choice)
-    row = find_open_row(choice)
-    @columns[choice][row] = player
+    @columns[choice].push(player)
     @last_player = player
     @last_move = choice
   end
@@ -141,7 +142,7 @@ class Board
   end
   
   def find_open_row(choice)
-    @columns[choice].find(" ")
+    @columns[choice].length
   end
   
   

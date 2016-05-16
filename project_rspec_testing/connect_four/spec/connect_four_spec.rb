@@ -34,12 +34,12 @@ describe "ConnectFour" do
   
   describe "Board.find_open_row" do
     it "finds the first row in a blank column" do
-      expect(bc.find_open_row(3)).to eq(0)
+      expect(bd.find_open_row(3)).to eq(0)
     end
     it "finds the first open row in a column" do
       bd.make_move(p1, 3)
       bd.make_move(p1, 3)
-      expect(bc.find_open_row(3)).to eq(2)
+      expect(bd.find_open_row(3)).to eq(2)
     end
   end
   
@@ -49,7 +49,8 @@ describe "ConnectFour" do
       expect(bd.columns[1][0]).to eq(p1)
     end
     it "stacks multiple discs" do
-      bd.make_move(p1, 1); bd.make_move(p2, 1)
+      bd.make_move(p1, 1)
+      bd.make_move(p2, 1)
       expect(bd.columns[1][1]).to eq(p2)
     end
   end
@@ -74,7 +75,7 @@ describe "ConnectFour" do
     end
   end
   
-  # Victory Checks
+
   
   describe "Board.horizontal_win?" do
     it "identifies horizontal wins for #{ConnectFour::PLAYERS.first}" do
@@ -161,7 +162,7 @@ describe "ConnectFour" do
   
   describe "Board.ascii_cells" do
     it "draws an empty row of cells" do
-      expect(bd.ascii_cells).to eq("|   |   |   |   |   |   |   |")
+      expect(bd.ascii_cells(0)).to eq("|   |   |   |   |   |   |   |")
     end
     it "draws cells with discs" do
       bd.make_move(p1, 1)
