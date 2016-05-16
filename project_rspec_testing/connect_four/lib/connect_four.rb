@@ -93,11 +93,12 @@ class Board
   
   
   def display
-    print ascii_separator
+    puts ascii_separator
     (@height - 1).downto(0) do |i|
-      draw_cell(i)
-      draw_separator
+      puts draw_cell(i)
+      puts draw_separator
     end
+    puts ascii_labels + "\n"
   end
   
   def ascii_separator
