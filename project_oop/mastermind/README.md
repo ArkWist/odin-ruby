@@ -4,13 +4,14 @@ A command line Mastermind game.
 
 ## Features
 
-* Human or AI play for either side (though AI hasn't been written yet)
-* Flexible number of colors and rows, as well as code length
+* User definable number of colors and rows
+* User definable code length
+* ~~Human or AI play for either side~~
 
 ## Installation
 
 1. Load `mm.rb` in the IRB
-2. Enter commands to proceed
+2. Enter `play` commands to start the game
 
 ## Full Command List
 
@@ -32,15 +33,9 @@ A command line Mastermind game.
   * `!` = right color, right spot
   * `:` = right color, wrong spot
   * `.` = wrong color
-4. The codebreaker wins if they get the right code before they run out of rows.
+4. The codebreaker wins if they guess the code before they run out of rows.
 5. The codemaker wins if the codebreaker runs out of rows.
 
 ## About
 
-I wrote this to practice Ruby as part of [The Odin Project](http://www.theodinproject.com/) curriculum. 
-
-See **[Project: OOP with Ruby](http://www.theodinproject.com/ruby-programming/oop)** for more information.
-
-### What I learned
-
-As with [Tic-Tac-Toe](https://github.com/ArkWist/tic_tac_toe), this project's been most helpful for getting used to Ruby syntax.
+Written for [The Odin Project](http://www.theodinproject.com/). See **[Project: OOP with Ruby](http://www.theodinproject.com/ruby-programming/oop)** for more information.
