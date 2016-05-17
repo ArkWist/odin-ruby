@@ -2,7 +2,9 @@
 
 A cipher that encrypts text by substituting letters alphabetically for [The Odin Project](http://www.theodinproject.com/).
 
-#### Example
+See **[Projects: Ruby Building Blocks](http://www.theodinproject.com/ruby-programming/building-blocks)** for details.
+
+#### Caesar Cipher Example
 
 If `text = ruby` and `shift = 3`
 
@@ -15,6 +17,4 @@ u | v | w | **x**
 b | c | d | **e**
 y | z | a | **b**
 
-The result is `uxeb`.
-
-See **[Projects: Ruby Building Blocks](http://www.theodinproject.com/ruby-programming/building-blocks)** for details.
+The result is **`uxeb`**
