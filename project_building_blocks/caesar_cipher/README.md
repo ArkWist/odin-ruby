@@ -1,6 +1,6 @@
 # Caesar Cipher
 
-A cipher that encrypts text by substituting letters alphabetically. Written for [The Odin Project](http://www.theodinproject.com/).
+Encrypts text by substituting letters alphabetically. Written for [The Odin Project](http://www.theodinproject.com/).
 
 See **[Projects: Ruby Building Blocks](http://www.theodinproject.com/ruby-programming/building-blocks)** for details.
 
