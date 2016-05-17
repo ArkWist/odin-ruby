@@ -7,19 +7,22 @@ class ConnectFour
   def initialize
     width, height = 7, 6
     @board = Board.new(width, height)
-    setup_game#; play
+    setup_game
+    play
   end
   
   def setup_game
     @board.wipe
     @player = PLAYERS.first
+    @board.display
   end
   
   def play
     first_move = true
     until game_set?
-      first_move ? first_move == false : next_player
+      first_move ? first_move = false : next_player
       move
+      @board.display
     end
     game_set
     replay if replay?
@@ -38,6 +41,7 @@ class ConnectFour
       @board.make_move(@player, choice)
     else
       puts "Invalid move. Try again."
+      move
     end
   end
 
@@ -48,7 +52,8 @@ class ConnectFour
   end
   
   def game_set
-    puts "\nPlayer #{@board.last_player} is victorious.\n"
+    puts "Player #{@board.last_player} is victorious!"
+    puts
   end
   
   
@@ -59,13 +64,15 @@ class ConnectFour
     if valid_assertion?(assertion)
       assertion == "y" ? again = true : again = false
     else
+      puts "Invalid input."
       again = replay?
     end
     again
   end
   
   def replay
-    setup_game#; play
+    setup_game
+    play
   end
   
   def valid_assertion?(assertion)
@@ -80,30 +87,35 @@ class Board
   attr_reader :columns, :last_player
 
   def initialize(width, height)
-    @columns = Array.new(width){ Array.new }
+    #@columns = Array.new(width){ Array.new }
     @width = width
     @height = height
-    @last_player, @last_move = nil, nil
+    wipe
+    #@last_player, @last_move = nil, nil
   end
 
   def wipe
-    @columns.each { |col| col.each { Array.new } }
+    #@columns.each { |col| col.each { Array.new } }
+    @columns = Array.new(@width){ Array.new }
+    @last_player, @last_move = nil, nil
   end
   
   
   
   def display
+    puts
     puts ascii_separator
     (@height - 1).downto(0) do |i|
-      puts draw_cell(i)
-      puts draw_separator
+      puts ascii_cells(i)
+      puts ascii_separator
     end
-    puts ascii_labels + "\n"
+    puts ascii_labels
+    puts
   end
   
   def ascii_separator
     separator = " "
-    @width.times{ separator << "--- " }   # Would separator<<@width.times{"---"} work?
+    @width.times{ separator << "--- " }   # Would separator << @width.times{ "---" } work?
     separator
   end
   
@@ -124,15 +136,20 @@ class Board
   
   
   def make_move(player, choice)
-    @columns[choice].push(player)
+    @columns[choice.to_i].push(player)
     @last_player = player
-    @last_move = choice
+    @last_move = choice.to_i
   end
   
   def valid_move?(choice)
-    choice.is_a?(Integer) && col_exists?(choice) && !col_full?(choice)
+    #choice.is_a?(Integer) && col_exists?(choice) && !col_full?(choice)
+    is_integer?(choice) && col_exists?(choice.to_i) && !col_full?(choice.to_i)
   end
 
+  def is_integer?(choice)
+    choice.to_i == 0 && choice != "0" ? false : true
+  end
+  
   def col_exists?(choice)
     choice.between?(0, @width)
   end
@@ -148,7 +165,7 @@ class Board
   
   
   def victory?
-    horizontal_win? || vertical_win? || ne_diagonal_win? || se_diagonal_win?
+    !@last_move.nil? && (horizontal_win? || vertical_win? || ne_diagonal_win? || se_diagonal_win?)
   end
   
   def horizontal_win?
@@ -202,5 +219,8 @@ class Board
     victory
   end
   
-  
 end
+
+
+
+game = ConnectFour.new
