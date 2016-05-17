@@ -11,12 +11,14 @@ class ConnectFour
     play
   end
   
+  private
   def setup_game
     @board.wipe
     @player = PLAYERS.first
     @board.display
   end
   
+  private
   def play
     first_move = true
     until game_set?
@@ -30,10 +32,12 @@ class ConnectFour
 
   
   
+  private
   def next_player
     @player == PLAYERS.first ? @player = PLAYERS.last : @player = PLAYERS.first
   end
   
+  private
   def move
     print "Player #{@player}'s move: "
     choice = gets.chomp
@@ -47,10 +51,12 @@ class ConnectFour
 
   
   
+  private
   def game_set?
     @board.victory?
   end
   
+  private
   def game_set
     puts "Player #{@board.last_player} is victorious!"
     puts
@@ -58,6 +64,7 @@ class ConnectFour
   
   
   
+  private
   def replay?
     print "Replay? (y/n): "
     assertion = gets.chomp.downcase
@@ -70,11 +77,13 @@ class ConnectFour
     again
   end
   
+  private
   def replay
     setup_game
     play
   end
   
+  private
   def valid_assertion?(assertion)
     assertion == "y" || assertion == "n"
   end
@@ -92,6 +101,7 @@ class Board
     wipe
   end
 
+  public
   def wipe
     @columns = Array.new(@width){ Array.new }
     @last_player, @last_move = nil, nil
@@ -99,6 +109,7 @@ class Board
   
   
   
+  public
   def display
     puts
     puts ascii_separator
@@ -110,12 +121,14 @@ class Board
     puts
   end
   
+  private
   def ascii_separator
     separator = " "
     @width.times{ separator << "--- " }
     separator
   end
   
+  private
   def ascii_cells(row)
     cells = "|"
     @columns.each do |col|
@@ -124,6 +137,7 @@ class Board
     cells
   end
 
+  private
   def ascii_labels
     labels = " "
     @width.times { |i| labels << " #{i}  " }
@@ -131,39 +145,46 @@ class Board
   end
   
   
-  
+ 
+  public
   def make_move(player, choice)
     @columns[choice.to_i].push(player)
     @last_player = player
     @last_move = choice.to_i
   end
   
+  public
   def valid_move?(choice)
     is_integer?(choice) && col_exists?(choice.to_i) && !col_full?(choice.to_i)
   end
 
+  private
   def is_integer?(choice)
     choice.to_i == 0 && choice != "0" ? false : true
   end
   
+  private
   def col_exists?(choice)
     choice.between?(0, @width)
   end
   
+  private
   def col_full?(choice)
     @columns[choice].length >= @height
   end
   
-  def find_open_row(choice)
-    @columns[choice].length
-  end
+#  def find_open_row(choice)
+#    @columns[choice].length
+#  end
   
   
   
+  public
   def victory?
     !@last_move.nil? && (horizontal_win? || vertical_win? || ne_diagonal_win? || se_diagonal_win?)
   end
   
+  private
   def horizontal_win?
     consecutive, victory = 0, false
     depth = @columns[@last_move].length - 1
@@ -174,6 +195,7 @@ class Board
     victory
   end
   
+  private
   def vertical_win?
     consecutive, victory = 0, false
     @columns[@last_move][0..-1].each do |row|
@@ -183,6 +205,7 @@ class Board
     victory
   end
   
+  private
   def ne_diagonal_win?
     consecutive, victory = 0, false
     position, depth = @last_move, @columns[@last_move].length - 1
@@ -199,6 +222,7 @@ class Board
     victory
   end
   
+  private
   def se_diagonal_win?
     consecutive, victory = 0, false
     position, depth = @last_move, @columns[@last_move].length - 1
