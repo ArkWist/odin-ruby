@@ -26,7 +26,7 @@ Completed projects from [The Odin Project](http://www.theodinproject.com/)'s *[R
 - Command Line Web Server (Incomplete)
 
 #### Recursion
-- [Fibonacci](https://github.com/ArkWist/odin-ruby/tree/master/project_recursion/fibonacci)
+- [Fibonacci](https://github.com/ArkWist/odin-ruby/tree/master/project_recursion/fibonacci) (Incomplete)
 - [Merge Sort](https://github.com/ArkWist/odin-ruby/tree/master/project_recursion/merge_sort)
 
 #### Data Structures and Algorithms
