@@ -40,4 +40,4 @@ Completed projects from [The Odin Project](http://www.theodinproject.com/)'s *[R
 - Connect Four
 
 #### Ruby Final Project
-See [**Chess**](https://github.com/ArkWist/chess)
+- See: [**Chess**](https://github.com/ArkWist/chess)
