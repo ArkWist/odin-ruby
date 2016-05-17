@@ -5,39 +5,39 @@ Completed projects from [The Odin Project](http://www.theodinproject.com/)'s *[R
 ## Project List
 
 #### Building Blocks
-- Caesar Cipher
-- Stock Picker
-- Substrings
+- [Caesar Cipher](https://github.com/ArkWist/odin-ruby/tree/master/project_building_blocks/caesar_cipher)
+- [Stock Picker](https://github.com/ArkWist/odin-ruby/tree/master/project_building_blocks/stock_picker)
+- [Substrings](https://github.com/ArkWist/odin-ruby/tree/master/project_building_blocks/substrings)
 
 #### Advanced Building Blocks
-- Bubble Sort
-- Enumerable Methods
+- [Bubble Sort](https://github.com/ArkWist/odin-ruby/tree/master/project_adv_building_blocks/bubble_sort)
+- [Enumerable Methods](https://github.com/ArkWist/odin-ruby/tree/master/project_adv_building_blocks/enumerable)
 
 #### Object-Oriented Programming
-- Tic Tac Toe
-- Mastermind
+- [Tic Tac Toe](https://github.com/ArkWist/odin-ruby/tree/master/project_oop/tic_tac_toe)
+- [Mastermind](https://github.com/ArkWist/odin-ruby/tree/master/project_oop/mastermind)
 
 #### File I/O and Serialization
-- Event Manager
-- Hangman
+- [Event Manager](https://github.com/ArkWist/odin-ruby/tree/master/project_file_io/event_manager)
+- [Hangman](https://github.com/ArkWist/odin-ruby/tree/master/project_file_io/hangman)
 
 #### Ruby on the Web
-- Twitter Spambot (Incomplete)
+- ~~[Twitter Spambot](https://github.com/ArkWist/odin-ruby/tree/master/project_ruby_web/microblogger)~~
 - Command Line Web Server (Incomplete)
 
 #### Recursion
-- Fibonacci
-- Merge Sort
+- [Fibonacci](https://github.com/ArkWist/odin-ruby/tree/master/project_recursion/fibonacci)
+- [Merge Sort](https://github.com/ArkWist/odin-ruby/tree/master/project_recursion/merge_sort)
 
 #### Data Structures and Algorithms
-- Searching Binary Trees
-- Knight's Travails
+- [Searching Binary Trees](https://github.com/ArkWist/odin-ruby/tree/master/project_data_structures/binary_search_tree)
+- [Knight's Travails](https://github.com/ArkWist/odin-ruby/tree/master/project_data_structures/knights_travails)
 
 #### Testing Ruby
-- Testing Caesar Cipher
-- Testing Enumerable Methods
-- Testing Tic Tac Toe (Incomplete)
-- Connect Four
+- [Testing Caesar Cipher](https://github.com/ArkWist/odin-ruby/tree/master/project_rspec_testing/caesar_cipher)
+- [Testing Enumerable Methods](https://github.com/ArkWist/odin-ruby/tree/master/project_rspec_testing/enumerable)
+- [Testing Tic Tac Toe](https://github.com/ArkWist/odin-ruby/tree/master/project_rspec_testing/tic_tac_toe) (Incomplete)
+- [Connect Four](https://github.com/ArkWist/odin-ruby/tree/master/project_rspec_testing/connect_four)
 
 #### Ruby Final Project
 - See [**Chess**](https://github.com/ArkWist/chess)
