@@ -32,6 +32,8 @@ describe "ConnectFour" do
     end
   end
   
+  
+  
   describe "Board.find_open_row" do
     it "finds the first row in a blank column" do
       expect(bd.find_open_row(3)).to eq(0)

@@ -87,15 +87,12 @@ class Board
   attr_reader :columns, :last_player
 
   def initialize(width, height)
-    #@columns = Array.new(width){ Array.new }
     @width = width
     @height = height
     wipe
-    #@last_player, @last_move = nil, nil
   end
 
   def wipe
-    #@columns.each { |col| col.each { Array.new } }
     @columns = Array.new(@width){ Array.new }
     @last_player, @last_move = nil, nil
   end
@@ -115,7 +112,7 @@ class Board
   
   def ascii_separator
     separator = " "
-    @width.times{ separator << "--- " }   # Would separator << @width.times{ "---" } work?
+    @width.times{ separator << "--- " }
     separator
   end
   
@@ -142,7 +139,6 @@ class Board
   end
   
   def valid_move?(choice)
-    #choice.is_a?(Integer) && col_exists?(choice) && !col_full?(choice)
     is_integer?(choice) && col_exists?(choice.to_i) && !col_full?(choice.to_i)
   end
 
