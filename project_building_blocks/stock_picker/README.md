@@ -1,5 +1,5 @@
 # Stock Picker
 
-Takes an array of stock prices, one for each day. Then determines the optimal day (index) to buy and sell during the given period. I wrote this to practice Ruby as part of [The Odin Project](http://www.theodinproject.com/) curriculum. 
+A script that determines the best days to buy and sell during a given period. Written for [The Odin Project](http://www.theodinproject.com/).
 
-See **[Projects: Ruby Building Blocks](http://www.theodinproject.com/ruby-programming/building-blocks)** for more information.
+See **[Projects: Ruby Building Blocks](http://www.theodinproject.com/ruby-programming/building-blocks)** for details.
