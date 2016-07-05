@@ -38,6 +38,7 @@ class LinkedList
     until index == 0 do node = node.next_node unless node.nil?; index -= 1 end
     value = if node then node.value else node end
   end
+  
   def pop
     new_tail = head
     old_tail = head.next_node if new_tail
@@ -45,11 +46,13 @@ class LinkedList
     if new_tail then new_tail.next_node = nil end
     old_tail
   end
+  
   def contains?(value)
     node, contains = head, false
     until contains || node.nil? do contains = node.value == value; node = node.next_node end
     contains
   end
+  
   def find(value)
     node, i, index = head, 0, nil
     until index || node.nil?
@@ -68,20 +71,30 @@ class LinkedList
     string
   end
   
-  def insert_at(value, index) # Currently puts this `index` past head and deletes remainder
-    node, i, broken_tail, broken_head = head, 0, nil, nil
-    
-    
-    
-    
-    
-    until broken_tail || node.nil? do broken_tail = node if i == index; i += 1; node = node.next_node end
-    node = Node.new(value, broken_head)
-    unless broken_tail.nil? then broken_tail.next_node = node end
+  # Doesn't tell you if it fails.
+  def insert_at(value, index) # Insert at 0 doesn't work
+    if index == 0 then @head = Node.new(value, head)
+    else index -= 1; new_tail, new_head = head, head ? head.next_node : nil
+      until new_tail.nil? || index <= 0
+        new_tail = new_tail.next_node
+        new_head = new_head.next_node unless new_head.nil?
+        index -= 1
+      end
+      if index == 0 then node = Node.new(value, new_head); new_tail.next_node = node if new_tail end
+    end
   end
   
-  def remove_at(index) # remove node at given index
-    node = at(index)
+  # Doesn't tell you if it fails.
+  def remove_at(index)
+    if index == 0 then @head = head.next_node unless head.nil?
+    else index -= 1; new_tail, new_head = head, head.next_node ? head.next_node.next_node : nil
+      until new_head.nil? || index <= 0
+        new_tail = new_tail.next_node unless new_tail.nil?
+        new_head = new_head.next_node
+        index -= 1
+      end
+      if index == 0 then new_tail.next_node = new_head end
+    end
   end
   
 end
@@ -117,8 +130,12 @@ puts "list.to_s: #{list.to_s}"
 list2 = LinkedList.new
 puts "list2.to_s: #{list2.to_s}"
 list.append("jkl")
-puts "list.to_s: #{list.to_s}"
+puts "list.to_s after append: #{list.to_s}"
 list.insert_at("mno", 1)
-puts "list.to_s: #{list.to_s}"
-
-
+puts "list.to_s after insert: #{list.to_s}"
+list.insert_at("pqr", 0)
+puts "list.to_s after insert: #{list.to_s}"
+list.remove_at(3)
+puts "list.to_s after remove: #{list.to_s}"
+list.remove_at(0)
+puts "list.to_s after remove: #{list.to_s}"
