@@ -1,5 +1,3 @@
-
-
 class LinkedList
 
   def initialize
@@ -111,31 +109,3 @@ class Node
 
 end
 
-
-list = LinkedList.new
-list.append("abc")
-list.prepend("def")
-list.append("ghi")
-puts "list.head.value: #{list.head.value}"
-puts "list.tail.value: #{list.tail.value}"
-puts "list.size: #{list.size}"
-puts "list.at(2): #{list.at(2)}"
-puts "list.pop.value: #{list.pop.value}"
-puts "list.size: #{list.size}"
-puts "list.contains?(\"abc\"): #{list.contains?("abc")}"
-puts "list.contains?(\"abc\"): #{list.contains?("ab")}"
-puts "list.find(\"def\"): #{list.find("def")}"
-puts "list.find(\"abc\"): #{list.find("abc")}"
-puts "list.to_s: #{list.to_s}"
-list2 = LinkedList.new
-puts "list2.to_s: #{list2.to_s}"
-list.append("jkl")
-puts "list.to_s after append: #{list.to_s}"
-list.insert_at("mno", 1)
-puts "list.to_s after insert: #{list.to_s}"
-list.insert_at("pqr", 0)
-puts "list.to_s after insert: #{list.to_s}"
-list.remove_at(3)
-puts "list.to_s after remove: #{list.to_s}"
-list.remove_at(0)
-puts "list.to_s after remove: #{list.to_s}"
