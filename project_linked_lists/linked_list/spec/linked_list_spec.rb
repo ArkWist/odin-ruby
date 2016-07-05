@@ -3,7 +3,13 @@ require "linked_list"
 
 describe LinkedList do
   let(:l) { LinkedList.new }
-  let(:list) { LinkedList.new.append("abc").append("def").append("ghi") }
+  let(:list) do
+    $list = LinkedList.new
+    $list.append("abc")
+    $list.append("def")
+    $list.append("ghi")
+    $list
+  end
   
   describe "LinkedList.append" do
     context "the list is empty" do
@@ -25,6 +31,7 @@ describe LinkedList do
       it "prints 'nil'" do
         expect(l.to_s).to eq("nil")
       end
+    end
     it "prints each node in the list" do
       expect(list.to_s).to eq("( abc ) -> ( def ) -> ( ghi ) -> nil")
     end
@@ -36,11 +43,12 @@ describe LinkedList do
         l.prepend("abc")
         expect(l.head.value).to eq("abc")
       end
+    end
     it "creates a node at the head of the current list" do
       list.prepend("jkl")
-      expect(l.head.value).to eq("jkl")
-      expect(l.head.next_node.value).to eq("abc")
-      expect(l.head.next_node.next_node.next_node.value).to eq("ghi")
+      expect(list.head.value).to eq("jkl")
+      expect(list.head.next_node.value).to eq("abc")
+      expect(list.head.next_node.next_node.next_node.value).to eq("ghi")
     end
   end
   
@@ -55,8 +63,8 @@ describe LinkedList do
     it "gets the value of the last node" do
       expect(l.tail).to eq(nil)
       l.append("abc")
-      expect(l.tail).to eq("abc")
-      expect(list.tail).to eq("ghi")
+      expect(l.tail.value).to eq("abc")
+      expect(list.tail.value).to eq("ghi")
     end
   end
   

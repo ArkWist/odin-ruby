@@ -26,15 +26,15 @@ class LinkedList
   end
   
   def tail
-    node = @head
+    node = head
     unless node.nil? then node = node.next_node until node.next_node.nil? end
     node
   end
   
   def at(index)
     node = @head
-    until index == 0 do node = node.next_node unless node.nil?; index -= 1 end
-    value = if node then node.value else node end
+    until index <= 0 do node = node.next_node unless node.nil?; index -= 1 end
+    value = if node && index == 0 then node.value else nil end
   end
   
   def pop
