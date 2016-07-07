@@ -10,7 +10,8 @@ class TicTacToe
   
   def play
     print_board
-    until victor = false || is_draw?
+    victor = false
+    until victor || is_draw?
       take_turn(@player)
       is_victorious?(@player) ? victor = @player : next_player
       print_board
@@ -140,7 +141,7 @@ class Board
   # Game set checks ###########################################################
   
   def is_victorious?(player)
-    victorious = win_across?(player) || win_down?(player) || win_diagonally?(player)
+    victorious = win_down?(player) || win_across?(player) || win_diagonally?(player)
   end
   
   def is_draw?
@@ -177,7 +178,11 @@ class Board
   
   def win_down?(player)
     win = false
-    @spaces.each { |file| win = file.all? { |space| space == player unless win } }
+    0.upto(get_size - 1) do |file|
+      down = true
+      0.upto(get_size - 1) { |rank| down = @spaces[file][rank] == player unless !down }
+      win = down if !win
+    end
     win
   end
   
@@ -185,7 +190,7 @@ class Board
     win = false
     0.upto(get_size - 1) do |rank|
       across = true
-      @spaces.each_with_index { |file, f| across = @spaces[f][rank] == player unless !across }
+      0.upto(get_size - 1) { |file| across = @spaces[file][rank] == player unless !across }
       win = across if !win
     end
     win
