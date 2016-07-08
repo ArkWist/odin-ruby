@@ -29,6 +29,9 @@ Completed projects from [The Odin Project](http://www.theodinproject.com/)'s *[R
 - [Fibonacci](https://github.com/ArkWist/odin-ruby/tree/master/project_recursion/fibonacci) (Incomplete)
 - [Merge Sort](https://github.com/ArkWist/odin-ruby/tree/master/project_recursion/merge_sort)
 
+#### Linked Lists
+- [Linked Lists](https://github.com/ArkWist/odin-ruby/tree/master/project_linked_lists/linked_list)
+
 #### Data Structures and Algorithms
 - [Searching Binary Trees](https://github.com/ArkWist/odin-ruby/tree/master/project_data_structures/binary_search_tree)
 - [Knight's Travails](https://github.com/ArkWist/odin-ruby/tree/master/project_data_structures/knights_travails)
