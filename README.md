@@ -23,10 +23,10 @@ Completed projects from [The Odin Project](http://www.theodinproject.com/)'s *[R
 
 #### Ruby on the Web
 - ~~[Twitter Spambot](https://github.com/ArkWist/odin-ruby/tree/master/project_ruby_web/microblogger)~~
-- Command Line Web Server (Incomplete)
+- ~~Command Line Web Server (skipped)~~
 
 #### Recursion
-- [Fibonacci](https://github.com/ArkWist/odin-ruby/tree/master/project_recursion/fibonacci) (Incomplete)
+- [Fibonacci](https://github.com/ArkWist/odin-ruby/tree/master/project_recursion/fibonacci)
 - [Merge Sort](https://github.com/ArkWist/odin-ruby/tree/master/project_recursion/merge_sort)
 
 #### Linked Lists
@@ -39,7 +39,7 @@ Completed projects from [The Odin Project](http://www.theodinproject.com/)'s *[R
 #### Testing Ruby
 - [Testing Caesar Cipher](https://github.com/ArkWist/odin-ruby/tree/master/project_rspec_testing/caesar_cipher)
 - [Testing Enumerable Methods](https://github.com/ArkWist/odin-ruby/tree/master/project_rspec_testing/enumerable)
-- [Testing Tic Tac Toe](https://github.com/ArkWist/odin-ruby/tree/master/project_rspec_testing/tic_tac_toe) (Incomplete)
+- [Testing Tic Tac Toe](https://github.com/ArkWist/odin-ruby/tree/master/project_rspec_testing/tic_tac_toe) (incomplete)
 - [Connect Four](https://github.com/ArkWist/odin-ruby/tree/master/project_rspec_testing/connect_four)
 
 #### Ruby Final Project
