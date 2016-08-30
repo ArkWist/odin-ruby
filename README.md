@@ -23,7 +23,7 @@ Completed projects from [The Odin Project](http://www.theodinproject.com/)'s *[R
 
 #### Ruby on the Web
 - ~~[Twitter Spambot](https://github.com/ArkWist/odin-ruby/tree/master/project_ruby_web/microblogger)~~
-- ~~Command Line Web Server (skipped)~~
+- ~~Command Line Web Server~~
 
 #### Recursion
 - [Fibonacci](https://github.com/ArkWist/odin-ruby/tree/master/project_recursion/fibonacci)
